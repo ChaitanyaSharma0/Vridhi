@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillForge — Visual Architecture</title>
+  <meta name="description" content="Interactive visual architecture of SkillForge AI-Powered Career Intelligence Platform">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header">
+    <div class="header-brand">
+      <div class="logo">◆</div>
+      <div>
+        <h1>SkillForge VARC</h1>
+        <div class="subtitle">Visual Architecture — Interactive Flow Explorer</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn" onclick="collapseAll()">Collapse All</button>
+      <button class="btn" onclick="expandAll()">Expand All</button>
+      <button class="btn btn-demo" onclick="runFullDemo()">▶ Run Full Demo</button>
+    </div>
+  </header>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="main-container">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="anchor-badge">🎯 Anchored Problem Area: Career Intelligence</div>
+      <h2>How <span>SkillForge</span> Works — End to End</h2>
+      <p class="hero-question">
+        Every module exists to answer one question: <strong>"What should I learn next, and what will it be worth?"</strong>
+      </p>
+      <div class="stats-row" style="max-width:700px; margin:0 auto;">
+        <div class="stat-card">
+          <div class="stat-value green">4</div>
+          <div class="stat-label">Architecture Layers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value blue">4</div>
+          <div class="stat-label">Intelligence Modules</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value orange">6/8</div>
+          <div class="stat-label">Problem Areas Covered</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value purple">3</div>
+          <div class="stat-label">Stakeholders Served</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ ARCHITECTURE ═══ -->
+    <div class="architecture" id="architecture">
+
+      <!-- ═══ LAYER 1: DATA INGESTION ═══ -->
+      <div class="layer" data-layer="1" id="layer1">
+        <div class="layer-header" onclick="toggleLayer('layer1')">
+          <div class="layer-header-left">
+            <div class="layer-number">01</div>
+            <div>
+              <div class="layer-title">Data Ingestion & ETL Pipeline</div>
+              <div class="layer-subtitle">Raw Indian workforce data from 5 primary sources → MongoDB</div>
+            </div>
+          </div>
+          <div class="layer-header-right">
+            <div class="layer-badge">5 Sources</div>
+            <span class="info-icon">i
+              <span class="tooltip">This layer collects raw data from Indian job portals, salary databases, government reports, and university syllabi. All data is legally sourced from public datasets and APIs. Data is stored raw in MongoDB before any processing.</span>
+            </span>
+            <div class="layer-toggle">▼</div>
+          </div>
+        </div>
+        <div class="layer-content">
+          <div class="layer-body">
+            <div class="module-grid">
+
+              <div class="module-card" data-color="green" onclick="openModal('naukri')">
+                <div class="module-card-header">
+                  <div class="module-icon">📋</div>
+                  <div class="module-card-title">Naukri.com Job Postings</div>
+                  <span class="info-icon">i
+                    <span class="tooltip">Primary source for Indian job market data. We ingest job titles, descriptions, required skills, experience ranges, salary ranges, and locations from thousands of listings.</span>
+                  </span>
+                </div>
+                <div class="module-card-desc">Live job postings with role titles, skill requirements, experience levels, salary ranges, and city-wise distribution across India.</div>
+                <div class="io-section">
+                  <div class="io-box">
+                    <div class="io-box-header input">📥 Sample Raw Input</div>
+                    <div class="io-box-body">
+                      {<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"title"</span>: "Senior Data Scientist",<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"company"</span>: "Flipkart",<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"location"</span>: "Bangalore",<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"experience"</span>: "4-7 years",<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"description"</span>: "Looking for exp in<br>
+                      &nbsp;&nbsp;&nbsp;Python, TensorFlow, ML pipelines,<br>
+                      &nbsp;&nbsp;&nbsp;A/B testing, SQL, Spark...",<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"salary"</span>: "₹18-28 LPA"<br>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="module-card" data-color="blue" onclick="openModal('linkedin')">
+                <div class="module-card-header">
+                  <div class="module-icon">💼</div>
+                  <div class="module-card-title">LinkedIn & Glassdoor India</div>
+                  <span class="info-icon">i
+                    <span class="tooltip">Compensation data and salary benchmarks. Provides salary distributions by role, experience, city, and company size for the Indian market.</span>
+                  </span>
+                </div>
+                <div class="module-card-desc">Compensation data, salary benchmarks, regional distribution, and company-level salary intelligence for the Indian tech market.</div>
+                <div class="io-section">
+                  <div class="io-box">
+                    <div class="io-box-header input">📥 Sample Raw Input</div>
+                    <div class="io-box-body">
+                      {<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"role"</span>: "ML Engineer",<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"city"</span>: "Hyderabad",<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"experience_years"</span>: 5,<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"base_salary"</span>: 2200000,<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"total_comp"</span>: 2800000,<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"skills"</span>: ["PyTorch", "Python",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;"Kubernetes", "MLflow"]<br>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="module-card" data-color="teal" onclick="openModal('nsdc')">
+                <div class="module-card-header">
+                  <div class="module-icon">🏛️</div>
+                  <div class="module-card-title">NSDC & NASSCOM Reports</div>
+                  <span class="info-icon">i
+                    <span class="tooltip">Government and industry body reports providing national skill frameworks, employability statistics, and sector-wise workforce demand projections for India.</span>
+                  </span>
+                </div>
+                <div class="module-card-desc">National skill frameworks, employability statistics, sector-wise workforce demand, and standardized qualification data from government bodies.</div>
+              </div>
+
+              <div class="module-card" data-color="orange" onclick="openModal('university')">
+                <div class="module-card-header">
+                  <div class="module-icon">🎓</div>
+                  <div class="module-card-title">University Syllabi (IITs, NITs)</div>
+                  <span class="info-icon">i
+                    <span class="tooltip">Actual course syllabi from Indian universities. We extract topics covered per course to compare against market skill demands. This powers the CurriculumSync module.</span>
+                  </span>
+                </div>
+                <div class="module-card-desc">Course-level syllabi from Indian engineering institutions — topics, credits, and learning outcomes mapped to market-relevant skills.</div>
+                <div class="io-section">
+                  <div class="io-box">
+                    <div class="io-box-header input">📥 Sample Raw Input</div>
+                    <div class="io-box-body">
+                      {<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"university"</span>: "IIT Delhi",<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"course"</span>: "COL774 Machine Learning",<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"topics"</span>: ["Linear Regression",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;"SVM", "Neural Networks",<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;"Decision Trees", "PCA"],<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"credits"</span>: 4,<br>
+                      &nbsp;&nbsp;<span class="highlight-blue">"semester"</span>: 7<br>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="module-card" data-color="cyan" onclick="openModal('resumes')">
+                <div class="module-card-header">
+                  <div class="module-icon">📄</div>
+                  <div class="module-card-title">Candidate Resumes</div>
+                  <span class="info-icon">i
+                    <span class="tooltip">Resume data (synthetic or uploaded) used for skill extraction and gap analysis. Users can also upload their own resume for personalized analysis.</span>
+                  </span>
+                </div>
+                <div class="module-card-desc">Structured resume data — extracted skills, education, experience — used for personalized gap analysis via TalentMatch module.</div>
+              </div>
+
+            </div>
+
+            <!-- Output of Layer 1 -->
+            <div class="io-section mt-3">
+              <div class="io-box">
+                <div class="io-box-header output">📤 Layer 1 Output → Stored in MongoDB (8 Raw Collections)</div>
+                <div class="io-box-body">
+                  <span class="highlight">raw_postings</span> → 15,000+ job listings<br>
+                  <span class="highlight">raw_salaries</span> → Compensation records<br>
+                  <span class="highlight">raw_resumes</span> → Candidate profiles<br>
+                  <span class="highlight">raw_syllabi</span> → University course data<br>
+                  <span class="highlight">raw_reports</span> → NSDC/NASSCOM data<br>
+                  <span class="dim">// All stored as unstructured documents</span><br>
+                  <span class="dim">// Preserving source provenance metadata</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector 1→2 -->
+      <div class="layer-connector" id="conn12">
+        <div class="arrow-line">
+          <div class="data-packet" id="packet12"></div>
+        </div>
+      </div>
+
+      <!-- ═══ LAYER 2: NLP ENGINE ═══ -->
+      <div class="layer" data-layer="2" id="layer2">
+        <div class="layer-header" onclick="toggleLayer('layer2')">
+          <div class="layer-header-left">
+            <div class="layer-number">02</div>
+            <div>
+              <div class="layer-title">NLP Engine & Skill Ontology Layer</div>
+              <div class="layer-subtitle">Raw text → Extracted skills → ESCO mapping → Semantic embeddings → ChromaDB</div>
+            </div>
+          </div>
+          <div class="layer-header-right">
+            <div class="layer-badge">3 Stages</div>
+            <span class="info-icon">i
+              <span class="tooltip">This is the CORE ENGINE of SkillForge. It takes raw unstructured text (job descriptions, resumes, syllabi) and extracts structured skill data. It uses ESCO taxonomy for standardization and sentence-transformers for semantic embeddings. Output goes to both MongoDB (structured) and ChromaDB (vector store).</span>
+            </span>
+            <div class="layer-toggle">▼</div>
+          </div>
+        </div>
+        <div class="layer-content">
+          <div class="layer-body">
+
+            <div class="module-grid">
+              <div class="module-card" data-color="teal" onclick="openModal('esco')">
+                <div class="module-card-header">
+                  <div class="module-icon">🏷️</div>
+                  <div class="module-card-title">ESCO Skill Taxonomy</div>
+                  <span class="info-icon">i
+                    <span class="tooltip">ESCO (European Skills/Competences) is an official EU skill classification with 500+ standardized skills. We use it to normalize skill names — e.g., "ML", "machine learning", "Machine Learning (ML)" all map to the same canonical skill.</span>
+                  </span>
+                </div>
+                <div class="module-card-desc">500+ standardized skills from the official EU ESCO framework. Normalizes variations ("ML" → "Machine Learning") to a canonical taxonomy.</div>
+                <div class="io-section">
+                  <div class="io-box">
+                    <div class="io-box-header process">⚙️ Normalization Example</div>
+                    <div class="io-box-body">
+                      <span class="highlight-orange">Input variations:</span><br>
+                      "ML", "machine learning", "Machine Learning (ML)", "M.L."<br><br>
+                      <span class="highlight">→ Canonical output:</span><br>
+                      <span class="highlight">"Machine Learning"</span> <span class="dim">(ESCO: S1.4.2)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="module-card" data-color="blue" onclick="openModal('skillner')">
+                <div class="module-card-header">
+                  <div class="module-icon">🔍</div>
+                  <div class="module-card-title">Skill NER (Hybrid Extraction)</div>
+                  <span class="info-icon">i
+                    <span class="tooltip">Two-pass extraction: (1) Regex/dictionary match against ESCO taxonomy for known skills, (2) LLM pass via Groq for skills the dictionary missed. This catches both common skills and emerging/niche ones.</span>
+                  </span>
+                </div>
+                <div class="module-card-desc">Two-pass extraction: regex/dictionary match against ESCO + LLM-assisted (Groq) extraction for emerging skills the dictionary misses.</div>
+                <div class="io-section">
+                  <div class="io-box">
+                    <div class="io-box-header input">📥 Input (Raw Job Description)</div>
+                    <div class="io-box-body">
+                      "Looking for a senior engineer with<br>
+                      &nbsp;experience in <span class="highlight-blue">Python</span>, <span class="highlight-blue">TensorFlow</span>,<br>
+                      &nbsp;<span class="highlight-blue">ML pipelines</span>, <span class="highlight-blue">A/B testing</span>, <span class="highlight-blue">SQL</span>,<br>
+                      &nbsp;and <span class="highlight-blue">Apache Spark</span>. Must have<br>
+                      &nbsp;strong <span class="highlight-blue">statistical analysis</span> skills."
+                    </div>
+                  </div>
+                  <div class="flow-arrow">↓</div>
+                  <div class="io-box">
+                    <div class="io-box-header output">📤 Output (Extracted Skills Array)</div>
+                    <div class="io-box-body">
+                      <span class="highlight">Pass 1 (Regex/ESCO):</span><br>
+                      ["Python", "TensorFlow", "SQL", "Apache Spark"]<br><br>
+                      <span class="highlight-purple">Pass 2 (LLM/Groq):</span><br>
+                      ["ML Pipelines", "A/B Testing", "Statistical Analysis"]<br><br>
+                      <span class="highlight-orange">Final merged:</span><br>
+                      ["Python", "TensorFlow", "SQL", "Apache Spark",<br>
+                      &nbsp;"Machine Learning", "A/B Testing",<br>
+                      &nbsp;"Statistical Analysis"]<br>
+                      <span class="dim">// 7 skills extracted, all ESCO-normalized</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="module-card" data-color="purple" onclick="openModal('embeddings')">
+                <div class="module-card-header">
+                  <div class="module-icon">🧮</div>
+                  <div class="module-card-title">Semantic Embeddings</div>
+                  <span class="info-icon">i
+                    <span class="tooltip">Uses sentence-transformers (MiniLM-L6-v2) to convert skills and text chunks into 384-dimensional vectors. These vectors capture semantic meaning — "Python" and "pandas" are closer together than "Python" and "Kubernetes". Stored in ChromaDB for fast semantic search.</span>
+                  </span>
+                </div>
+                <div class="module-card-desc">Sentence-transformers (MiniLM-L6-v2) converts text → 384-dim vectors. Stored in ChromaDB vector store for semantic search and RAG retrieval.</div>
+                <div class="io-section">
+                  <div class="io-box">
+                    <div class="io-box-header process">⚙️ Embedding Example</div>
+                    <div class="io-box-body">
+                      <span class="highlight-orange">Input:</span> "Python programming language"<br><br>
+                      <span class="highlight">Output vector (384 dims):</span><br>
+                      [0.0234, -0.1892, 0.4521, 0.0891,<br>
+                      &nbsp;-0.3201, 0.1567, ..., 0.0423]<br><br>
+                      <span class="dim">// Cosine similarity:</span><br>
+                      <span class="dim">// "Python" ↔ "pandas" = </span><span class="highlight">0.82</span><br>
+                      <span class="dim">// "Python" ↔ "Kubernetes" = </span><span class="highlight-orange">0.31</span><br>
+                      <span class="dim">// "Python" ↔ "Cooking" = </span><span class="highlight-orange">0.05</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Output of Layer 2 -->
+            <div class="io-section mt-3">
+              <div class="io-box">
+                <div class="io-box-header output">📤 Layer 2 Output → MongoDB (Processed) + ChromaDB (Vectors)</div>
+                <div class="io-box-body">
+                  <span class="highlight">MongoDB processed_postings:</span><br>
+                  {<br>
+                  &nbsp;&nbsp;"posting_id": "NK_28491",<br>
+                  &nbsp;&nbsp;"role": "Data Scientist",<br>
+                  &nbsp;&nbsp;"skills": ["Python", "TensorFlow", "SQL", "Spark",<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ML", "A/B Testing", "Statistics"],<br>
+                  &nbsp;&nbsp;"experience_range": [4, 7],<br>
+                  &nbsp;&nbsp;"city": "Bangalore",<br>
+                  &nbsp;&nbsp;"salary_range": [1800000, 2800000],<br>
+                  &nbsp;&nbsp;"date": "2025-08-15"<br>
+                  }<br><br>
+                  <span class="highlight-purple">ChromaDB collection "skillforge_knowledge":</span><br>
+                  1,200+ embedded chunks for RAG retrieval<br>
+                  <span class="dim">// "Python demand grew 23% in Indian job market..."</span><br>
+                  <span class="dim">// "Average ML Engineer salary in Bangalore: ₹18.5L..."</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector 2→3 -->
+      <div class="layer-connector" id="conn23">
+        <div class="arrow-line">
+          <div class="data-packet" id="packet23"></div>
+        </div>
+      </div>
+
+      <!-- ═══ LAYER 3: INTELLIGENCE LAYER ═══ -->
+      <div class="layer" data-layer="3" id="layer3">
+        <div class="layer-header" onclick="toggleLayer('layer3')">
+          <div class="layer-header-left">
+            <div class="layer-number">03</div>
+            <div>
+              <div class="layer-title">Intelligence & ML Layer — 4 Modules</div>
+              <div class="layer-subtitle">SkillRadar • TalentMatch • CompIntel • CurriculumSync + Knowledge Graph + MLflow</div>
+            </div>
+          </div>
+          <div class="layer-header-right">
+            <div class="layer-badge">4 Modules</div>
+            <span class="info-icon">i
+              <span class="tooltip">The analytical core. Four intelligence modules consume processed data from Layer 2. Each module has specific ML models trained on Indian data. This layer also includes the Knowledge Graph (NetworkX), t-SNE visualizations, and MLflow experiment tracking.</span>
+            </span>
+            <div class="layer-toggle">▼</div>
+          </div>
+        </div>
+        <div class="layer-content">
+          <div class="layer-body">
+
+            <div class="module-grid">
+              <!-- SkillRadar -->
+              <div class="module-card" data-color="blue" onclick="openModal('skillradar')">
+                <div class="module-card-header">
+                  <div class="module-icon">📈</div>
+                  <div class="module-card-title">SkillRadar™ — Trend Forecaster</div>
+                  <span class="info-icon">i
+                    <span class="tooltip">Groups job postings by month, counts skill mentions per role, classifies trends as rising (>15% growth), stable, or declining (>15% drop). Uses ARIMA/Linear Regression for 6-month forecast. Powers the "What skills are trending?" answer.</span>
+                  </span>
+                </div>
+                <div class="module-card-desc">Tracks skill demand trends over time. Forecasts rising & dying skills per role and city. Uses ARIMA + Linear Regression on temporal posting data.</div>
+                <div class="io-section">
+                  <div class="io-box">
+                    <div class="io-box-header output">📤 Sample Output</div>
+                    <div class="io-box-body">
+                      <span class="highlight">Rising (Data Scientist, Bangalore):</span><br>
+                      &nbsp;• LangChain: <span class="highlight">+340%</span> <span class="dim">(6mo)</span><br>
+                      &nbsp;• MLOps: <span class="highlight">+89%</span><br>
+                      &nbsp;• Kubernetes: <span class="highlight">+45%</span><br><br>
+                      <span class="highlight-orange">Dying:</span><br>
+                      &nbsp;• Hadoop: <span class="highlight-orange">-52%</span><br>
+                      &nbsp;• jQuery: <span class="highlight-orange">-67%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TalentMatch -->
+              <div class="module-card" data-color="green" onclick="openModal('talentmatch')">
+                <div class="module-card-header">
+                  <div class="module-icon">🎯</div>
+                  <div class="module-card-title">TalentMatch — Gap Engine</div>
+                  <span class="info-icon">i
+                    <span class="tooltip">Takes a user's resume skills and compares against the "ideal skill vector" for their target role (aggregated from all postings). Computes match % using cosine similarity on embeddings. Ranks missing skills by how much they'd improve the match + their salary impact from CompIntel.</span>
+                  </span>
+                </div>
+                <div class="module-card-desc">Resume → skill extraction → cosine similarity against target role's ideal skill vector → match %, ranked gaps with salary impact.</div>
+                <div class="io-section">
+                  <div class="io-box">
+                    <div class="io-box-header input">📥 Input</div>
+                    <div class="io-box-body">
+                      <span class="highlight-blue">User Skills:</span> Python, SQL, pandas, NumPy<br>
+                      <span class="highlight-blue">Target Role:</span> Data Scientist
+                    </div>
+                  </div>
+                  <div class="flow-arrow">↓</div>
+                  <div class="io-box">
+                    <div class="io-box-header output">📤 Output</div>
+                    <div class="io-box-body">
+                      <span class="highlight">Match Score: 42%</span><br><br>
+                      <span class="highlight-blue">Top skills to learn:</span><br>
+                      1. Machine Learning → <span class="highlight">+18% match</span> | <span class="highlight-orange">+₹2.1L</span><br>
+                      2. TensorFlow → <span class="highlight">+14% match</span> | <span class="highlight-orange">+₹1.8L</span><br>
+                      3. Statistics → <span class="highlight">+12% match</span> | <span class="highlight-orange">+₹1.2L</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CompIntel -->
+              <div class="module-card" data-color="orange" onclick="openModal('compintel')">
+                <div class="module-card-header">
+                  <div class="module-icon">💰</div>
+                  <div class="module-card-title">CompIntel™ — Salary Predictor</div>
+                  <span class="info-icon">i
+                    <span class="tooltip">Multi-model ensemble (RandomForest + XGBoost + GradientBoosting) trained on Indian salary data. Predicts salary from skills + experience + location. Features a "What-if" simulator and SHAP explainability showing which skills/factors drive the prediction up or down.</span>
+                  </span>
+                </div>
+                <div class="module-card-desc">Ensemble model (RF + XGBoost + GBM) predicts salary from skills + exp + location. "What-if" simulator + SHAP explainability.</div>
+                <div class="io-section">
+                  <div class="io-box">
+                    <div class="io-box-header input">📥 Input</div>
+                    <div class="io-box-body">
+                      <span class="highlight-blue">Skills:</span> Python, SQL, ML, TensorFlow<br>
+                      <span class="highlight-blue">Experience:</span> 5 years<br>
+                      <span class="highlight-blue">Location:</span> Bangalore
+                    </div>
+                  </div>
+                  <div class="flow-arrow">↓</div>
+                  <div class="io-box">
+                    <div class="io-box-header output">📤 Output</div>
+                    <div class="io-box-body">
+                      <span class="highlight">Predicted Salary: ₹22.4 LPA</span><br>
+                      <span class="dim">Confidence: 85% (₹19.8L - ₹25.1L)</span><br><br>
+                      <span class="highlight-orange">What-if: Add "Kubernetes"</span><br>
+                      New prediction: <span class="highlight">₹25.1 LPA</span> (+₹2.7L)
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CurriculumSync -->
+              <div class="module-card" data-color="purple" onclick="openModal('curriculumsync')">
+                <div class="module-card-header">
+                  <div class="module-icon">🏫</div>
+                  <div class="module-card-title">CurriculumSync — Alignment Scorer</div>
+                  <span class="info-icon">i
+                    <span class="tooltip">Compares extracted skills from university syllabi against top demanded skills from job postings. Scores each course by overlap with market demand. Generates a downloadable PDF gap report showing which courses are aligned and which need updating.</span>
+                  </span>
+                </div>
+                <div class="module-card-desc">Scores university courses against market demand. Auto-generates PDF gap reports for academic deans to facilitate curriculum updates.</div>
+                <div class="io-section">
+                  <div class="io-box">
+                    <div class="io-box-header output">📤 Sample Output</div>
+                    <div class="io-box-body">
+                      <span class="highlight-blue">IIT Delhi CS Curriculum Score:</span><br><br>
+                      COL774 Machine Learning: <span class="highlight">82%</span> aligned<br>
+                      COL672 NLP: <span class="highlight">75%</span> aligned<br>
+                      COL106 Data Structures: <span class="highlight">91%</span> aligned<br>
+                      COL331 Operating Systems: <span class="highlight-orange">45%</span> aligned<br>
+                      COL216 Computer Architecture: <span class="highlight-orange">28%</span> aligned<br><br>
+                      <span class="dim">→ PDF Report auto-generated (fpdf2)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Supporting Systems -->
+            <h3 style="margin: 1.5rem 0 0.8rem; font-size: 0.9rem; color: var(--text-muted);">Supporting Systems</h3>
+            <div class="module-grid">
+              <div class="module-card" data-color="cyan" onclick="openModal('knowledgegraph')">
+                <div class="module-card-header">
+                  <div class="module-icon">🕸️</div>
+                  <div class="module-card-title">Knowledge Graph (NetworkX + pyvis)</div>
+                </div>
+                <div class="module-card-desc">Maps 500+ skills → 50+ roles → 15 sectors. Interactive HTML visualization. Click any skill to see connected roles weighted by demand.</div>
+              </div>
+
+              <div class="module-card" data-color="pink" onclick="openModal('tsne')">
+                <div class="module-card-header">
+                  <div class="module-icon">🔬</div>
+                  <div class="module-card-title">t-SNE Skill Space Visualization</div>
+                </div>
+                <div class="module-card-desc">2D scatter plot of skill embeddings. Similar skills cluster naturally (Python near pandas, Docker near K8s). Color-coded by category.</div>
+              </div>
+
+              <div class="module-card" data-color="teal" onclick="openModal('mlflow')">
+                <div class="module-card-header">
+                  <div class="module-icon">📊</div>
+                  <div class="module-card-title">MLflow Experiment Tracking</div>
+                </div>
+                <div class="module-card-desc">Every model run logged with hyperparameters, metrics (RMSE, R², MAE), and model artifacts. Versioned, reproducible, auditable.</div>
+              </div>
+            </div>
+
+            <!-- Sample Visualizations -->
+            <div class="mt-3">
+              <h3 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem;">📊 Sample Outputs — What Layer 3 Produces</h3>
+
+              <!-- Skill Trend Chart -->
+              <div class="sample-chart">
+                <div class="chart-title">SkillRadar™ — Skill Demand Trend (Data Scientist, India)</div>
+                <div class="bar-chart">
+                  <div class="bar-row">
+                    <span class="bar-label">TensorFlow</span>
+                    <div class="bar-track"><div class="bar-fill green" style="width: 78%">↑ 78%</div></div>
+                    <span class="bar-value" style="color:var(--accent-green)">Rising</span>
+                  </div>
+                  <div class="bar-row">
+                    <span class="bar-label">LangChain</span>
+                    <div class="bar-track"><div class="bar-fill green" style="width: 92%">↑ 340%</div></div>
+                    <span class="bar-value" style="color:var(--accent-green)">Rising 🔥</span>
+                  </div>
+                  <div class="bar-row">
+                    <span class="bar-label">Python</span>
+                    <div class="bar-track"><div class="bar-fill blue" style="width: 95%">95%</div></div>
+                    <span class="bar-value" style="color:var(--accent-blue)">Stable</span>
+                  </div>
+                  <div class="bar-row">
+                    <span class="bar-label">SQL</span>
+                    <div class="bar-track"><div class="bar-fill blue" style="width: 82%">82%</div></div>
+                    <span class="bar-value" style="color:var(--accent-blue)">Stable</span>
+                  </div>
+                  <div class="bar-row">
+                    <span class="bar-label">Hadoop</span>
+                    <div class="bar-track"><div class="bar-fill orange" style="width: 25%">↓ 52%</div></div>
+                    <span class="bar-value" style="color:var(--accent-red)">Dying</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SHAP Chart -->
+              <div class="sample-chart mt-2">
+                <div class="chart-title">CompIntel™ — SHAP Feature Importance (Salary Prediction)</div>
+                <div class="shap-chart">
+                  <div class="shap-row">
+                    <span class="shap-feature">Experience (Years)</span>
+                    <div class="shap-bar-container">
+                      <div class="shap-center"></div>
+                      <div class="shap-bar positive" style="width: 35%"></div>
+                    </div>
+                    <span class="shap-value positive">+₹4.8L</span>
+                  </div>
+                  <div class="shap-row">
+                    <span class="shap-feature">Machine Learning</span>
+                    <div class="shap-bar-container">
+                      <div class="shap-center"></div>
+                      <div class="shap-bar positive" style="width: 25%"></div>
+                    </div>
+                    <span class="shap-value positive">+₹3.2L</span>
+                  </div>
+                  <div class="shap-row">
+                    <span class="shap-feature">Python</span>
+                    <div class="shap-bar-container">
+                      <div class="shap-center"></div>
+                      <div class="shap-bar positive" style="width: 18%"></div>
+                    </div>
+                    <span class="shap-value positive">+₹2.1L</span>
+                  </div>
+                  <div class="shap-row">
+                    <span class="shap-feature">Bangalore</span>
+                    <div class="shap-bar-container">
+                      <div class="shap-center"></div>
+                      <div class="shap-bar positive" style="width: 12%"></div>
+                    </div>
+                    <span class="shap-value positive">+₹1.5L</span>
+                  </div>
+                  <div class="shap-row">
+                    <span class="shap-feature">Cloud (AWS)</span>
+                    <div class="shap-bar-container">
+                      <div class="shap-center"></div>
+                      <div class="shap-bar positive" style="width: 10%"></div>
+                    </div>
+                    <span class="shap-value positive">+₹1.2L</span>
+                  </div>
+                  <div class="shap-row">
+                    <span class="shap-feature">No Degree</span>
+                    <div class="shap-bar-container">
+                      <div class="shap-center"></div>
+                      <div class="shap-bar negative" style="width: 15%"></div>
+                    </div>
+                    <span class="shap-value negative">-₹2.0L</span>
+                  </div>
+                  <div class="shap-row">
+                    <span class="shap-feature">Tier-3 City</span>
+                    <div class="shap-bar-container">
+                      <div class="shap-center"></div>
+                      <div class="shap-bar negative" style="width: 20%"></div>
+                    </div>
+                    <span class="shap-value negative">-₹3.1L</span>
+                  </div>
+                </div>
+                <div style="text-align:center; margin-top:0.8rem; font-size:0.72rem; color:var(--text-muted);">
+                  ← Decreases Salary &nbsp;&nbsp;|&nbsp;&nbsp; Increases Salary →
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector 3→4 -->
+      <div class="layer-connector" id="conn34">
+        <div class="arrow-line">
+          <div class="data-packet" id="packet34"></div>
+        </div>
+      </div>
+
+      <!-- ═══ LAYER 4: AI + PRESENTATION ═══ -->
+      <div class="layer" data-layer="4" id="layer4">
+        <div class="layer-header" onclick="toggleLayer('layer4')">
+          <div class="layer-header-left">
+            <div class="layer-number">04</div>
+            <div>
+              <div class="layer-title">Agentic AI + Presentation Layer</div>
+              <div class="layer-subtitle">RAG Career Counselor • Streamlit Dashboard • FastAPI + OpenAPI Docs</div>
+            </div>
+          </div>
+          <div class="layer-header-right">
+            <div class="layer-badge">3 Channels</div>
+            <span class="info-icon">i
+              <span class="tooltip">The delivery layer. Users interact here. The Agentic RAG career counselor uses Groq LLM + ChromaDB + function calling to autonomously route queries to the right intelligence module. Streamlit provides the interactive dashboard. FastAPI exposes all modules as RESTful endpoints.</span>
+            </span>
+            <div class="layer-toggle">▼</div>
+          </div>
+        </div>
+        <div class="layer-content">
+          <div class="layer-body">
+
+            <div class="module-grid">
+              <!-- Agentic RAG -->
+              <div class="module-card" data-color="purple" onclick="openModal('rag')" style="grid-column: span 2;">
+                <div class="module-card-header">
+                  <div class="module-icon">🤖</div>
+                  <div class="module-card-title">Agentic RAG Career Counselor</div>
+                  <span class="info-icon">i
+                    <span class="tooltip">This is NOT a simple chatbot. It uses agentic architecture: (1) User query comes in, (2) Groq LLM analyzes intent, (3) LLM decides which tool/module to call via function calling (TalentMatch, CompIntel, SkillRadar), (4) Module returns data, (5) LLM formulates grounded response using ChromaDB context. Fully autonomous routing — no hardcoded if/else.</span>
+                  </span>
+                </div>
+                <div class="module-card-desc">Autonomous, data-grounded guidance via Groq LLM + ChromaDB retrieval + function calling. Routes queries to intelligence modules without hardcoded rules.</div>
+
+                <!-- Agentic flow diagram -->
+                <div class="io-section">
+                  <div class="io-box">
+                    <div class="io-box-header process">⚙️ Agentic Pipeline Flow</div>
+                    <div class="io-box-body">
+                      <span class="highlight-blue">Step 1:</span> User Query → "I know Python and SQL.<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;How well do I match Data Scientist?"<br><br>
+                      <span class="highlight-purple">Step 2:</span> Groq LLM analyzes intent<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;→ Decides: call <span class="highlight">TalentMatch</span><br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ call <span class="highlight">CompIntel</span><br><br>
+                      <span class="highlight-orange">Step 3:</span> Function Calling executes<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;→ TalentMatch returns: match=42%,<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gaps=[ML, TensorFlow, Stats]<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;→ CompIntel returns: +₹4.5L impact<br><br>
+                      <span class="highlight">Step 4:</span> ChromaDB retrieves context<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;→ "ML demand grew 23% in India..."<br><br>
+                      <span class="highlight">Step 5:</span> Groq generates final response<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;→ Grounded in REAL data, not hallucinated
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Chat Preview -->
+                <div class="chat-preview mt-2">
+                  <div class="chat-header">
+                    <div class="chat-dots"><span></span><span></span><span></span></div>
+                    SkillForge AI Counselor — Live Interface
+                  </div>
+                  <div class="chat-messages">
+                    <div class="chat-msg user">
+                      "I know Python and SQL. How well do I match a Data Scientist role, and what skills should I learn next?"
+                    </div>
+                    <div class="chat-msg bot">
+                      <strong style="color:var(--accent-green)">✦ AGENTIC RAG RESPONSE</strong><br><br>
+                      <strong style="color:var(--accent-green); font-size:1.5rem;">42%</strong> Target Role Match Score<br>
+                      <strong style="color:var(--accent-orange)">Est. Salary Impact: +₹4.5L</strong><br>
+                      <span style="color:var(--text-muted); font-size:0.75rem;">Based on real-time Indian workforce data</span><br><br>
+                      <strong>Prioritized Skill Recommendations:</strong><br>
+                      1. Machine Learning (Scikit-Learn) <span style="color:var(--accent-green)">+18% Match</span> │ <span style="color:var(--accent-orange)">+₹2.1L</span><br>
+                      2. Data Visualization (Tableau) <span style="color:var(--accent-green)">+14% Match</span> │ <span style="color:var(--accent-orange)">+₹1.2L</span><br>
+                      3. Applied Statistics <span style="color:var(--accent-green)">+12% Match</span> │ <span style="color:var(--accent-orange)">+₹1.2L</span><br><br>
+                      <span style="color:var(--text-muted); font-size:0.75rem; font-style:italic;">Source: Grounded via ChromaDB retrieval (TalentMatch & CompIntel modules).</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Streamlit -->
+              <div class="module-card" data-color="green" onclick="openModal('streamlit')">
+                <div class="module-card-header">
+                  <div class="module-icon">📱</div>
+                  <div class="module-card-title">Streamlit Dashboard</div>
+                </div>
+                <div class="module-card-desc">Multi-page interactive app: SkillRadar trends, TalentMatch gap analysis, CompIntel salary predictor, CurriculumSync reports. Dark-themed UI.</div>
+              </div>
+
+              <!-- FastAPI -->
+              <div class="module-card" data-color="cyan" onclick="openModal('fastapi')">
+                <div class="module-card-header">
+                  <div class="module-icon">⚡</div>
+                  <div class="module-card-title">FastAPI + OpenAPI Docs</div>
+                </div>
+                <div class="module-card-desc">10+ RESTful endpoints. Auto-generated Swagger docs at /docs. API-first design for third-party integration with HR platforms.</div>
+                <div class="io-section">
+                  <div class="io-box">
+                    <div class="io-box-header process">⚙️ API Endpoints</div>
+                    <div class="io-box-body">
+                      <span class="highlight">GET</span> /api/v1/skills/trending<br>
+                      <span class="highlight">GET</span> /api/v1/skills/forecast/{skill}<br>
+                      <span class="highlight-blue">POST</span> /api/v1/resume/analyze<br>
+                      <span class="highlight">GET</span> /api/v1/salary/predict<br>
+                      <span class="highlight">GET</span> /api/v1/curriculum/{university}<br>
+                      <span class="highlight">GET</span> /api/v1/knowledge-graph<br>
+                      <span class="highlight-blue">POST</span> /api/v1/chat<br>
+                      <span class="highlight">GET</span> /api/v1/reports/generate<br>
+                      <span class="highlight">GET</span> /api/v1/health
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- /architecture -->
+
+    <!-- ═══ INTERACTIVE DEMO ═══ -->
+    <div class="demo-runner" id="demoRunner">
+      <h3>🔬 Interactive Demo — Trace a Query Through the Pipeline</h3>
+      <p style="color:var(--text-secondary); font-size:0.85rem; margin-bottom:0.5rem;">
+        See how a single user query flows through all 4 layers and produces a final response.
+      </p>
+      <div class="demo-input-group">
+        <input type="text" id="demoSkills" placeholder='Your skills (e.g., "Python, SQL, pandas")' value="Python, SQL, pandas">
+        <select id="demoRole">
+          <option value="Data Scientist">Target: Data Scientist</option>
+          <option value="ML Engineer">Target: ML Engineer</option>
+          <option value="Backend Developer">Target: Backend Developer</option>
+          <option value="Data Analyst">Target: Data Analyst</option>
+        </select>
+        <select id="demoCity">
+          <option value="Bangalore">Bangalore</option>
+          <option value="Hyderabad">Hyderabad</option>
+          <option value="Mumbai">Mumbai</option>
+          <option value="Delhi NCR">Delhi NCR</option>
+          <option value="Pune">Pune</option>
+        </select>
+        <button class="btn btn-primary" onclick="runInteractiveDemo()">▶ Run Pipeline</button>
+      </div>
+
+      <div class="demo-steps" id="demoSteps">
+        <!-- Steps are dynamically generated -->
+      </div>
+    </div>
+
+    <!-- ═══ KNOWLEDGE GRAPH PREVIEW ═══ -->
+    <div style="margin: 2rem 0;">
+      <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:1rem;">🕸️ Knowledge Graph Preview — Skill-Role Connections</h3>
+      <div class="kg-container" id="kgContainer">
+        <svg class="kg-svg" id="kgSvg"></svg>
+        <!-- Nodes will be positioned by JS -->
+      </div>
+      <p style="color:var(--text-muted); font-size:0.75rem; margin-top:0.5rem; text-align:center;">
+        Hover over nodes to see connections. In the real product, this is an interactive pyvis HTML graph with 500+ skills.
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>SkillForge VARC — Visual Architecture Reference for Team Understanding</p>
+      <p style="margin-top:0.5rem;">Built for Build For Bharat 2.0 Hackathon</p>
+    </footer>
+
+  </main>
+
+  <!-- ═══ DETAIL MODAL ═══ -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Module Details</div>
+        <button class="modal-close" onclick="closeModalDirect()">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Dynamic content -->
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

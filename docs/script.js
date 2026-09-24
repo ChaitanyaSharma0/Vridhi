@@ -1,4 +1,4 @@
-/* SkillForge — architecture reference */
+/* Vriddhi — architecture reference */
 
 // ── Layers ──
 function setLayer(layer, open) {
@@ -205,7 +205,7 @@ Projects: Stock price predictor, sentiment analysis"
     html: `
       <div class="modal-section">
         <h3>The Core Engine</h3>
-        <p>This is the single most important function in SkillForge. Everything downstream depends on accurate skill extraction. We use a two-pass approach:</p>
+        <p>This is the single most important function in Vriddhi. Everything downstream depends on accurate skill extraction. We use a two-pass approach:</p>
       </div>
       <div class="modal-section">
         <h3>Pass 1: Dictionary/Regex Match</h3>
@@ -382,6 +382,9 @@ experience. Must know CI/CD pipelines and agile.'"<br><br>
       <div class="modal-section">
         <h3>How CompIntel Works</h3>
         <p>A multi-model ensemble (RandomForest + XGBoost + GradientBoosting) trained on Indian salary data. Predicts a salary range for a whole profile: skills, experience, location and education together. SHAP shows which parts of the profile push the range up or down.</p>
+      </div>
+      <div class="modal-section">
+        <aside class="notice notice--salary"><p><strong>Salary disclaimer.</strong> Predicted salaries are market benchmarks derived from aggregated industry data for a given skill set, experience level, and location. They represent what the market is currently paying — not a job offer or guarantee. The purpose is to help users understand their market worth so they can negotiate fair compensation based on real industry standards.</p></aside>
       </div>
       <div class="modal-section">
         <h3>Model Training</h3>
@@ -873,7 +876,7 @@ function runInteractiveDemo() {
           <div><span class="k">today</span><p class="big-num">${lakhRange(salaryRange(target, city, fit))}</p><small>${targetName} in ${city} at ${fitPct}% fit</small></div>
           ${missing.length ? `<div><span class="k">top ${Math.min(3, missing.length)} gaps closed</span><p class="big-num">${lakhRange(salaryRange(target, city, fitAfter))}</p><small>adds ${missing.slice(0, 3).map(([n]) => escapeHtml(n)).join(', ')} → ${Math.round(fitAfter * 100)}% fit</small></div>` : ''}
         </div>
-        <p class="note">Ranges price your whole profile against people with similar coverage. No single skill carries a fixed rupee value.</p>`
+        <aside class="notice notice--salary"><p><strong>Salary disclaimer.</strong> Predicted salaries are market benchmarks derived from aggregated industry data for a given skill set, experience level, and location. They represent what the market is currently paying — not a job offer or guarantee. The purpose is to help users understand their market worth so they can negotiate fair compensation based on real industry standards.</p></aside>`
     },
     {
       layer: 'Layer 3 · RoleFit',
@@ -895,7 +898,7 @@ function runInteractiveDemo() {
       detail: `<div class="chat">
         <p class="chat-head">Counselor</p>
         <div class="msg user"><span class="who">You</span><p>I know ${raw.length ? escapeHtml(raw.join(', ')) : 'nothing yet'}. I want to become a ${targetName} in ${city}. Where do I stand?</p></div>
-        <div class="msg bot"><span class="who">SkillForge</span><div>
+        <div class="msg bot"><span class="who">Vriddhi</span><div>
           <p>You cover <strong>${fitPct}%</strong> of what ${targetName} postings in ${city} ask for, which puts you around <strong>${lakhRange(salaryRange(target, city, fit))}</strong>.</p>
           ${missing.length ? `<p>Learn ${missing.slice(0, 3).map(([n]) => `<strong>${escapeHtml(n)}</strong>`).join(', ')} next. Together they take you to about ${lakhRange(salaryRange(target, city, fitAfter))}.</p>` : ''}
           <p>${verdict}</p>

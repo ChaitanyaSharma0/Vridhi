@@ -1,4 +1,4 @@
-/* SkillForge — architecture reference */
+/* Vriddhi — architecture reference */
 
 :root {
   --paper: #f4f0e8;
@@ -150,8 +150,15 @@ main {
 /* ── Hero ── */
 .hero { padding: clamp(3rem, 9vw, 7rem) 0 0; }
 
-.hero h1 {
+.hero-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 21rem);
+  gap: 2rem 4rem;
+  align-items: end;
   margin-top: 1.5rem;
+}
+
+.hero h1 {
   max-width: 15ch;
   font: 400 clamp(2.9rem, 7.2vw, 6.25rem)/.96 var(--serif);
   letter-spacing: -.02em;
@@ -398,6 +405,24 @@ main {
 .flow::before { content: "↓ "; }
 
 .layer-output { margin-top: 1.75rem; }
+
+/* ── Notices (demo + salary) ── */
+.notice {
+  padding: .85rem 1rem;
+  border: 1px solid var(--rule-strong);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  background: var(--paper);
+  font-size: .82rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.notice strong, .notice-label { color: var(--ink); font-weight: 600; }
+.notice-label { margin-bottom: .35rem; font: 500 .72rem var(--mono); color: var(--accent); }
+.notice--hero { background: var(--card); font-size: .88rem; }
+.notice--layer { margin-top: 2rem; max-width: 80ch; }
+.notice--salary { margin: 0 0 1rem; max-width: 48ch; font-size: .78rem; }
+.modal-section .notice--salary, .demo-detail .notice--salary { max-width: none; }
 
 /* ── Handoff between layers ── */
 .handoff {
@@ -750,6 +775,8 @@ main {
   color: var(--ink-3);
   border-top: 1px solid var(--ink);
 }
+.footer-disclaimer { flex-basis: 100%; max-width: 90ch; margin-bottom: .5rem; font: 400 .78rem/1.6 var(--sans); color: var(--ink-3); }
+.footer-disclaimer strong { color: var(--ink-2); }
 
 /* ── Detail drawer ── */
 .modal-overlay {
@@ -816,7 +843,7 @@ main {
 
 /* ── Responsive ── */
 @media (max-width: 960px) {
-  .hero-foot, .section-head { grid-template-columns: minmax(0, 1fr); }
+  .hero-foot, .section-head, .hero-top { grid-template-columns: minmax(0, 1fr); }
   .module { grid-template-columns: minmax(0, 1fr); }
   .charts { grid-template-columns: minmax(0, 1fr); }
   .support { grid-template-columns: minmax(0, 1fr); }

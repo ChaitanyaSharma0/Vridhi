@@ -1,40 +1,42 @@
-/* ═══════════════════════════════════════════════════════════════
-   SkillForge VARC — Interactive Architecture Script
-   ═══════════════════════════════════════════════════════════════ */
+/* SkillForge — architecture reference */
 
-// ── Layer Toggle ──
+// ── Layers ──
+function setLayer(layer, open) {
+  layer.classList.toggle('expanded', open);
+  layer.querySelector('.layer-toggle').setAttribute('aria-expanded', open);
+}
+
 function toggleLayer(id) {
   const layer = document.getElementById(id);
-  layer.classList.toggle('expanded');
+  setLayer(layer, !layer.classList.contains('expanded'));
 }
 
 function expandAll() {
-  document.querySelectorAll('.layer').forEach(l => l.classList.add('expanded'));
+  document.querySelectorAll('.layer').forEach(l => setLayer(l, true));
 }
 
 function collapseAll() {
-  document.querySelectorAll('.layer').forEach(l => l.classList.remove('expanded'));
+  document.querySelectorAll('.layer').forEach(l => setLayer(l, false));
 }
 
-// Start with all expanded
 document.addEventListener('DOMContentLoaded', () => {
   expandAll();
   renderKnowledgeGraph();
 });
 
-// ── Modal System ──
+// ── Detail drawer content ──
 const modalData = {
   naukri: {
-    title: '📋 Naukri.com Job Postings — Deep Dive',
+    title: 'Naukri.com Job Postings',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-green)"></span> What is this?</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">Naukri.com is India's largest job portal. We ingest thousands of job postings to understand what skills Indian employers actually demand. Each posting gives us: job title, company, location, required skills (hidden in the description text), experience range, and salary range.</p>
+        <h3>What is this?</h3>
+        <p>Naukri.com is India's largest job portal. We ingest thousands of job postings to understand what skills Indian employers actually demand. Each posting gives us: job title, company, location, required skills (hidden in the description text), experience range, and salary range.</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-blue)"></span> How we process it</h3>
+        <h3>How we process it</h3>
         <div class="io-box">
-          <div class="io-box-header input">📥 Raw Job Posting (as received)</div>
+          <div class="io-box-header input">Raw Job Posting (as received)</div>
           <div class="io-box-body">
 {<br>
 &nbsp;&nbsp;"title": "Senior Data Scientist",<br>
@@ -54,7 +56,7 @@ const modalData = {
         </div>
         <div class="flow-arrow">↓ NLP Engine (Layer 2) extracts skills</div>
         <div class="io-box">
-          <div class="io-box-header output">📤 After Processing (stored in MongoDB)</div>
+          <div class="io-box-header output">After Processing (stored in MongoDB)</div>
           <div class="io-box-body">
 {<br>
 &nbsp;&nbsp;"posting_id": "NK_28491",<br>
@@ -78,8 +80,8 @@ const modalData = {
         </div>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-orange)"></span> What it feeds into</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">
+        <h3>What it feeds into</h3>
+        <p>
           → <strong>SkillRadar</strong>: Counts skill mentions per month to detect trends<br>
           → <strong>TalentMatch</strong>: Builds the "ideal skill vector" for each role<br>
           → <strong>CompIntel</strong>: Salary ranges become training data for prediction model<br>
@@ -90,14 +92,14 @@ const modalData = {
   },
 
   linkedin: {
-    title: '💼 LinkedIn & Glassdoor India — Deep Dive',
+    title: 'LinkedIn & Glassdoor India',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-blue)"></span> What is this?</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">Compensation and salary data from LinkedIn Salary Insights and Glassdoor India. Provides salary distributions by role, experience, city, and company size. This is the primary training data for our CompIntel salary prediction model.</p>
+        <h3>What is this?</h3>
+        <p>Compensation and salary data from LinkedIn Salary Insights and Glassdoor India. Provides salary distributions by role, experience, city, and company size. This is the primary training data for our CompIntel salary prediction model.</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-orange)"></span> Sample Data Points</h3>
+        <h3>Sample Data Points</h3>
         <div class="io-box">
           <div class="io-box-body">
 <span class="highlight-blue">Record 1:</span> ML Engineer, Hyderabad, 5yr exp → ₹22L base, ₹28L total<br>
@@ -113,14 +115,14 @@ const modalData = {
   },
 
   nsdc: {
-    title: '🏛️ NSDC & NASSCOM Reports — Deep Dive',
+    title: 'NSDC & NASSCOM Reports',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-teal)"></span> What is this?</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">Government and industry body data from the National Skill Development Corporation (NSDC) and NASSCOM. Provides official employability statistics, national qualification frameworks, and sector-wise workforce demand projections.</p>
+        <h3>What is this?</h3>
+        <p>Government and industry body data from the National Skill Development Corporation (NSDC) and NASSCOM. Provides official employability statistics, national qualification frameworks, and sector-wise workforce demand projections.</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-green)"></span> Key Data Points We Use</h3>
+        <h3>Key Data Points We Use</h3>
         <div class="io-box">
           <div class="io-box-body">
 • <span class="highlight">NASSCOM</span>: Only ~25% of Indian graduates are employable<br>
@@ -128,7 +130,7 @@ const modalData = {
 • <span class="highlight">NSDC</span>: Sector-wise skill demand projections 2025-2030<br>
 • <span class="highlight">NASSCOM</span>: Technology sector workforce = 5.4M professionals<br>
 • <span class="highlight">Skill Framework</span>: National Occupation Standards (NOS)<br>
-<br><span class="dim">// These stats go on our Problem slide and give us credibility with judges</span>
+
           </div>
         </div>
       </div>
@@ -136,16 +138,16 @@ const modalData = {
   },
 
   university: {
-    title: '🎓 University Syllabi — Deep Dive',
+    title: 'University Syllabi',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-orange)"></span> What is this?</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">Actual course syllabi from Indian engineering institutions — IITs, NITs, and state universities. We extract topics covered per course and compare them against what the job market actually demands.</p>
+        <h3>What is this?</h3>
+        <p>Actual course syllabi from Indian engineering institutions — IITs, NITs, and state universities. We extract topics covered per course and compare them against what the job market actually demands.</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-blue)"></span> Full Processing Example</h3>
+        <h3>Full Processing Example</h3>
         <div class="io-box">
-          <div class="io-box-header input">📥 Raw Syllabus (PDF/text)</div>
+          <div class="io-box-header input">Raw Syllabus (PDF/text)</div>
           <div class="io-box-body">
 <span class="highlight-blue">Course:</span> COL774 Machine Learning (IIT Delhi)<br>
 <span class="highlight-blue">Topics:</span><br>
@@ -161,7 +163,7 @@ const modalData = {
         </div>
         <div class="flow-arrow">↓ NLP extracts skill terms + CurriculumSync scores</div>
         <div class="io-box">
-          <div class="io-box-header output">📤 CurriculumSync Output</div>
+          <div class="io-box-header output">CurriculumSync Output</div>
           <div class="io-box-body">
 <span class="highlight">Extracted Skills:</span> ["Linear Regression", "SVM",<br>
 &nbsp;&nbsp;"Neural Networks", "Decision Trees", "Random Forest",<br>
@@ -184,15 +186,15 @@ const modalData = {
   },
 
   resumes: {
-    title: '📄 Candidate Resumes — Deep Dive',
+    title: 'Candidate Resumes',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-cyan)"></span> How Resume Analysis Works</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">Users upload a resume (or paste text). The NLP engine extracts their skills. TalentMatch then compares against the ideal skill vector for their target role. CompIntel predicts salary impact of each missing skill.</p>
+        <h3>How Resume Analysis Works</h3>
+        <p>Users upload a resume (or paste text). The NLP engine extracts their skills. TalentMatch then compares against the ideal skill vector for their target role. CompIntel predicts salary impact of each missing skill.</p>
       </div>
       <div class="modal-section">
         <div class="io-box">
-          <div class="io-box-header input">📥 User Uploads Resume</div>
+          <div class="io-box-header input">User Uploads Resume</div>
           <div class="io-box-body">
 "Rahul Sharma | 3 years experience<br>
 Skills: Python, SQL, pandas, NumPy, Jupyter,<br>
@@ -203,7 +205,7 @@ Projects: Stock price predictor, sentiment analysis"
         </div>
         <div class="flow-arrow">↓ NLP Engine extracts & normalizes</div>
         <div class="io-box">
-          <div class="io-box-header output">📤 Extracted Profile</div>
+          <div class="io-box-header output">Extracted Profile</div>
           <div class="io-box-body">
 {<br>
 &nbsp;&nbsp;<span class="highlight">"skills"</span>: ["Python", "SQL", "pandas", "NumPy",<br>
@@ -219,15 +221,15 @@ Projects: Stock price predictor, sentiment analysis"
   },
 
   esco: {
-    title: '🏷️ ESCO Taxonomy — Deep Dive',
+    title: 'ESCO Taxonomy',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-teal)"></span> What is ESCO?</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">ESCO (European Skills, Competences, Qualifications and Occupations) is an official EU classification with 13,000+ skills. We use a curated subset of 500+ tech skills. It gives us a standardized skill vocabulary so "ML", "machine learning", and "Machine Learning (ML)" all resolve to the same canonical term.</p>
+        <h3>What is ESCO?</h3>
+        <p>ESCO (European Skills, Competences, Qualifications and Occupations) is an official EU classification with 13,000+ skills. We use a curated subset of 500+ tech skills. It gives us a standardized skill vocabulary so "ML", "machine learning", and "Machine Learning (ML)" all resolve to the same canonical term.</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-orange)"></span> Why It Matters</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">Without normalization, our models would treat "JS", "JavaScript", and "javascript" as three different skills. ESCO eliminates this. It also gives us credibility — judges hear "we used the ESCO taxonomy" and think "these people know industry standards."</p>
+        <h3>Why It Matters</h3>
+        <p>Without normalization, our models would treat "JS", "JavaScript", and "javascript" as three different skills. ESCO eliminates this.</p>
         <div class="io-box mt-2">
           <div class="io-box-body">
 <span class="highlight-blue">Example mappings:</span><br><br>
@@ -246,16 +248,16 @@ Projects: Stock price predictor, sentiment analysis"
   },
 
   skillner: {
-    title: '🔍 Skill NER (Hybrid Extraction) — Deep Dive',
+    title: 'Skill NER (Hybrid Extraction)',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-blue)"></span> The Core Engine</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">This is the single most important function in SkillForge. Everything downstream depends on accurate skill extraction. We use a two-pass approach:</p>
+        <h3>The Core Engine</h3>
+        <p>This is the single most important function in SkillForge. Everything downstream depends on accurate skill extraction. We use a two-pass approach:</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-green)"></span> Pass 1: Dictionary/Regex Match</h3>
+        <h3>Pass 1: Dictionary/Regex Match</h3>
         <div class="io-box">
-          <div class="io-box-header process">⚙️ How it works</div>
+          <div class="io-box-header process">How it works</div>
           <div class="io-box-body">
 <span class="highlight-blue">Input text:</span><br>
 "Need Python expert with TensorFlow and Spark experience"<br><br>
@@ -268,9 +270,9 @@ Projects: Stock price predictor, sentiment analysis"
         </div>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-purple)"></span> Pass 2: LLM-Assisted (Groq)</h3>
+        <h3>Pass 2: LLM-Assisted (Groq)</h3>
         <div class="io-box">
-          <div class="io-box-header process">⚙️ For skills the dictionary missed</div>
+          <div class="io-box-header process">For skills the dictionary missed</div>
           <div class="io-box-body">
 <span class="highlight-purple">Prompt to Groq:</span><br>
 "Extract technical skills from this text that are NOT<br>
@@ -288,14 +290,14 @@ experience. Must know CI/CD pipelines and agile.'"<br><br>
   },
 
   embeddings: {
-    title: '🧮 Semantic Embeddings — Deep Dive',
+    title: 'Semantic Embeddings',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-purple)"></span> What are Embeddings?</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">We convert text into numbers (vectors) that capture <strong>meaning</strong>. The model (MiniLM-L6-v2) turns any text into a 384-dimensional vector. Similar concepts end up as similar vectors — so we can compute "how similar is Python to pandas?" mathematically.</p>
+        <h3>What are Embeddings?</h3>
+        <p>We convert text into numbers (vectors) that capture <strong>meaning</strong>. The model (MiniLM-L6-v2) turns any text into a 384-dimensional vector. Similar concepts end up as similar vectors — so we can compute "how similar is Python to pandas?" mathematically.</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-green)"></span> Where embeddings are used</h3>
+        <h3>Where embeddings are used</h3>
         <div class="io-box">
           <div class="io-box-body">
 <span class="highlight">1. TalentMatch:</span> Resume embedding vs. role embedding<br>
@@ -305,26 +307,26 @@ experience. Must know CI/CD pipelines and agile.'"<br><br>
 <span class="highlight">3. Skill Clustering:</span> Embed all skills → K-Means clustering<br>
 &nbsp;&nbsp;→ Auto-discover skill categories<br><br>
 <span class="highlight">4. t-SNE Visualization:</span> Reduce 384D → 2D for plotting<br>
-&nbsp;&nbsp;→ Beautiful skill map showing natural clusters
+&nbsp;&nbsp;→ A 2D skill map showing natural clusters
           </div>
         </div>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-orange)"></span> ChromaDB Storage</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">All embeddings are stored in ChromaDB — a vector database optimized for semantic search. When the RAG pipeline needs to answer "what skills should I learn?", it searches ChromaDB for the most relevant data chunks about that topic, then feeds them to Groq LLM as context.</p>
+        <h3>ChromaDB Storage</h3>
+        <p>All embeddings are stored in ChromaDB — a vector database optimized for semantic search. When the RAG pipeline needs to answer "what skills should I learn?", it searches ChromaDB for the most relevant data chunks about that topic, then feeds them to Groq LLM as context.</p>
       </div>
     `
   },
 
   skillradar: {
-    title: '📈 SkillRadar™ — Trend Forecaster — Deep Dive',
+    title: 'SkillRadar — Trend Forecaster',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-blue)"></span> How SkillRadar Works</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">SkillRadar answers: "What skills are rising, and which are dying?" It groups job postings by month, counts skill mentions per role, and classifies trends. Then uses time-series forecasting to predict 6 months ahead.</p>
+        <h3>How SkillRadar Works</h3>
+        <p>SkillRadar answers: "What skills are rising, and which are dying?" It groups job postings by month, counts skill mentions per role, and classifies trends. Then uses time-series forecasting to predict 6 months ahead.</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-green)"></span> Step-by-Step Pipeline</h3>
+        <h3>Step-by-Step Pipeline</h3>
         <div class="io-box">
           <div class="io-box-body">
 <span class="highlight-blue">Step 1:</span> Group processed_postings by (month, role, city)<br><br>
@@ -337,9 +339,9 @@ experience. Must know CI/CD pipelines and agile.'"<br><br>
 &nbsp;&nbsp;TensorFlow: (245-180)/180 = <span class="highlight">+36% in 3 months</span><br>
 &nbsp;&nbsp;Hadoop: (30-45)/45 = <span class="highlight-orange">-33% in 3 months</span><br><br>
 <span class="highlight-blue">Step 4:</span> Classify<br>
-&nbsp;&nbsp;>15% growth → <span class="highlight">🔥 Rising</span><br>
+&nbsp;&nbsp;>15% growth → <span class="highlight">Rising</span><br>
 &nbsp;&nbsp;-15% to +15% → <span class="highlight-blue">→ Stable</span><br>
-&nbsp;&nbsp;<-15% growth → <span class="highlight-orange">📉 Dying</span><br><br>
+&nbsp;&nbsp;&lt;-15% growth → <span class="highlight-orange">Declining</span><br><br>
 <span class="highlight-blue">Step 5:</span> ARIMA/Linear Reg forecast for next 6 months<br>
 &nbsp;&nbsp;TensorFlow (Oct 2025 predicted): 380 mentions<br>
 &nbsp;&nbsp;Hadoop (Oct 2025 predicted): 12 mentions
@@ -347,33 +349,33 @@ experience. Must know CI/CD pipelines and agile.'"<br><br>
         </div>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-orange)"></span> Sample Trend Chart Output</h3>
-        <div class="sample-chart">
-          <div class="chart-title">Data Scientist Skills — Bangalore (6 months)</div>
-          <div class="bar-chart">
-            <div class="bar-row"><span class="bar-label">LangChain</span><div class="bar-track"><div class="bar-fill green" style="width:92%">+340%</div></div><span class="bar-value" style="color:var(--accent-green)">🔥 Hot</span></div>
-            <div class="bar-row"><span class="bar-label">MLOps</span><div class="bar-track"><div class="bar-fill green" style="width:72%">+89%</div></div><span class="bar-value" style="color:var(--accent-green)">Rising</span></div>
-            <div class="bar-row"><span class="bar-label">Kubernetes</span><div class="bar-track"><div class="bar-fill green" style="width:55%">+45%</div></div><span class="bar-value" style="color:var(--accent-green)">Rising</span></div>
-            <div class="bar-row"><span class="bar-label">Python</span><div class="bar-track"><div class="bar-fill blue" style="width:95%">95%</div></div><span class="bar-value" style="color:var(--accent-blue)">Stable</span></div>
-            <div class="bar-row"><span class="bar-label">Hadoop</span><div class="bar-track"><div class="bar-fill orange" style="width:20%">-52%</div></div><span class="bar-value" style="color:var(--accent-red)">Dying</span></div>
-            <div class="bar-row"><span class="bar-label">jQuery</span><div class="bar-track"><div class="bar-fill orange" style="width:12%">-67%</div></div><span class="bar-value" style="color:var(--accent-red)">Dead</span></div>
+        <div class="chart">
+          <p class="chart-title">Data Scientist skills, Bangalore, last 6 months</p>
+          <div class="bars">
+            <div class="bar-row" data-trend="up"><span>LangChain</span><span class="bar-track"><span class="bar-fill" style="--w:92%"></span></span><span class="bar-value">+340%</span></div>
+            <div class="bar-row" data-trend="up"><span>MLOps</span><span class="bar-track"><span class="bar-fill" style="--w:72%"></span></span><span class="bar-value">+89%</span></div>
+            <div class="bar-row" data-trend="up"><span>Kubernetes</span><span class="bar-track"><span class="bar-fill" style="--w:55%"></span></span><span class="bar-value">+45%</span></div>
+            <div class="bar-row"><span>Python</span><span class="bar-track"><span class="bar-fill" style="--w:95%"></span></span><span class="bar-value">95%</span></div>
+            <div class="bar-row" data-trend="down"><span>Hadoop</span><span class="bar-track"><span class="bar-fill" style="--w:20%"></span></span><span class="bar-value">−52%</span></div>
+            <div class="bar-row" data-trend="down"><span>jQuery</span><span class="bar-track"><span class="bar-fill" style="--w:12%"></span></span><span class="bar-value">−67%</span></div>
           </div>
+          <ul class="legend"><li><i class="up"></i>Rising</li><li><i></i>Stable</li><li><i class="down"></i>Declining</li></ul>
         </div>
       </div>
     `
   },
 
   talentmatch: {
-    title: '🎯 TalentMatch — Gap Engine — Deep Dive',
+    title: 'TalentMatch — Gap Engine',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-green)"></span> How TalentMatch Works</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">This module answers: "How well do I match a target role, and what should I learn next?" It uses semantic embeddings to compare your skills against the ideal skill profile for any role.</p>
+        <h3>How TalentMatch Works</h3>
+        <p>This module answers: "How well do I match a target role, and what should I learn next?" It uses semantic embeddings to compare your skills against the ideal skill profile for any role.</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-blue)"></span> Full Example Walkthrough</h3>
+        <h3>Full Example Walkthrough</h3>
         <div class="io-box">
-          <div class="io-box-header input">📥 Input</div>
+          <div class="io-box-header input">Input</div>
           <div class="io-box-body">
 <span class="highlight-blue">User skills:</span> Python, SQL, pandas, NumPy, Git<br>
 <span class="highlight-blue">Target role:</span> Data Scientist<br>
@@ -382,7 +384,7 @@ experience. Must know CI/CD pipelines and agile.'"<br><br>
         </div>
         <div class="flow-arrow">↓</div>
         <div class="io-box">
-          <div class="io-box-header process">⚙️ Processing Steps</div>
+          <div class="io-box-header process">Processing Steps</div>
           <div class="io-box-body">
 <span class="highlight-blue">Step 1:</span> Aggregate all Data Scientist postings in Bangalore<br>
 &nbsp;&nbsp;→ 2,400 postings found<br><br>
@@ -400,9 +402,9 @@ experience. Must know CI/CD pipelines and agile.'"<br><br>
         </div>
         <div class="flow-arrow">↓</div>
         <div class="io-box">
-          <div class="io-box-header output">📤 Final Output</div>
+          <div class="io-box-header output">Final Output</div>
           <div class="io-box-body">
-<span class="highlight" style="font-size:1.2rem">Match Score: 42%</span><br><br>
+<span class="highlight">Match Score: 42%</span><br><br>
 <strong>Your matched skills:</strong>
 <div class="skill-tags mt-1">
   <span class="skill-tag matched">Python ✓</span>
@@ -423,14 +425,14 @@ experience. Must know CI/CD pipelines and agile.'"<br><br>
   },
 
   compintel: {
-    title: '💰 CompIntel™ — Salary Predictor — Deep Dive',
+    title: 'CompIntel — Salary Predictor',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-orange)"></span> How CompIntel Works</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">A multi-model ensemble (RandomForest + XGBoost + GradientBoosting) trained on Indian salary data. Predicts salary from skills + experience + location + education. Includes a "What-if" simulator and SHAP explainability.</p>
+        <h3>How CompIntel Works</h3>
+        <p>A multi-model ensemble (RandomForest + XGBoost + GradientBoosting) trained on Indian salary data. Predicts salary from skills + experience + location + education. Includes a "What-if" simulator and SHAP explainability.</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-blue)"></span> Model Training</h3>
+        <h3>Model Training</h3>
         <div class="io-box">
           <div class="io-box-body">
 <span class="highlight-blue">Training Data:</span><br>
@@ -450,7 +452,7 @@ experience. Must know CI/CD pipelines and agile.'"<br><br>
         </div>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-green)"></span> "What-if" Simulator Demo</h3>
+        <h3>"What-if" Simulator Demo</h3>
         <div class="io-box">
           <div class="io-box-body">
 <span class="highlight-orange">Base profile:</span><br>
@@ -463,7 +465,7 @@ Skills: Python, SQL | Exp: 3yr | City: Bangalore<br>
 <span class="highlight-orange">What if: Move to Hyderabad?</span><br>
 <span class="highlight">New prediction: ₹15.8 LPA (-₹1.4L from BLR)</span><br><br>
 <span class="dim">// The slider UI in Streamlit makes this interactive</span><br>
-<span class="dim">// Judge slides a toggle and watches salary change live</span>
+<span class="dim">// Toggle a skill and watch the prediction change live</span>
           </div>
         </div>
       </div>
@@ -471,16 +473,16 @@ Skills: Python, SQL | Exp: 3yr | City: Bangalore<br>
   },
 
   curriculumsync: {
-    title: '🏫 CurriculumSync — Alignment Scorer — Deep Dive',
+    title: 'CurriculumSync — Alignment Scorer',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-purple)"></span> How CurriculumSync Works</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">Compares what universities teach vs. what the market demands. Scores each course by skill overlap. Auto-generates a PDF report for academic deans with specific recommendations.</p>
+        <h3>How CurriculumSync Works</h3>
+        <p>Compares what universities teach vs. what the market demands. Scores each course by skill overlap. Auto-generates a PDF report for academic deans with specific recommendations.</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-blue)"></span> Full Pipeline Example</h3>
+        <h3>Full Pipeline Example</h3>
         <div class="io-box">
-          <div class="io-box-header input">📥 Input: IIT Delhi CS Department</div>
+          <div class="io-box-header input">Input: IIT Delhi CS Department</div>
           <div class="io-box-body">
 8 courses analyzed:<br>
 COL100, COL106, COL216, COL226, COL331,<br>
@@ -489,7 +491,7 @@ COL672, COL774, COL870
         </div>
         <div class="flow-arrow">↓</div>
         <div class="io-box">
-          <div class="io-box-header output">📤 Alignment Report</div>
+          <div class="io-box-header output">Alignment Report</div>
           <div class="io-box-body">
 <span class="highlight">Overall Department Score: 68%</span><br><br>
 <strong>Course-by-Course:</strong><br>
@@ -499,10 +501,10 @@ COL672 NLP: <span class="highlight">75%</span> ███████████
 COL226 Programming: <span class="highlight-blue">65%</span> ███████████████░░░░░<br>
 COL331 OS: <span class="highlight-orange">45%</span> ███████████░░░░░░░░░<br>
 COL216 Architecture: <span class="highlight-orange">28%</span> ████████░░░░░░░░░░░░<br><br>
-<strong style="color:var(--accent-green)">✅ Strengths:</strong><br>
+<strong>✅ Strengths:</strong><br>
 → Strong ML/AI curriculum<br>
 → Good data structures foundation<br><br>
-<strong style="color:var(--accent-red)">❌ Gaps to Address:</strong><br>
+<strong>❌ Gaps to Address:</strong><br>
 → No MLOps/Deployment curriculum<br>
 → No Cloud Computing courses<br>
 → Missing: LLMs, Transformers, LangChain<br>
@@ -515,15 +517,15 @@ COL216 Architecture: <span class="highlight-orange">28%</span> █████�
   },
 
   knowledgegraph: {
-    title: '🕸️ Knowledge Graph — Deep Dive',
+    title: 'Knowledge Graph',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-cyan)"></span> What is the Knowledge Graph?</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">A graph database mapping relationships between 500+ skills, 50+ job roles, and 15 industry sectors. Built with NetworkX and visualized as an interactive HTML page using pyvis. Edges are weighted by co-occurrence frequency in job postings.</p>
+        <h3>What is the Knowledge Graph?</h3>
+        <p>A graph database mapping relationships between 500+ skills, 50+ job roles, and 15 industry sectors. Built with NetworkX and visualized as an interactive HTML page using pyvis. Edges are weighted by co-occurrence frequency in job postings.</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-green)"></span> What it looks like</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">An interactive node graph where you can click "Python" and see every role that needs it, with edge thickness showing demand strength. Click "Data Scientist" and see all skills connected to it. Nodes glow, edges animate — it looks like a neural network visualization.</p>
+        <h3>What it looks like</h3>
+        <p>An interactive node graph where you can click "Python" and see every role that needs it, with edge thickness showing demand strength. Click "Data Scientist" and see all skills connected to it.</p>
         <div class="io-box mt-2">
           <div class="io-box-body">
 <span class="highlight-blue">Sample edges:</span><br>
@@ -542,14 +544,14 @@ COL216 Architecture: <span class="highlight-orange">28%</span> █████�
   },
 
   tsne: {
-    title: '🔬 t-SNE Skill Space — Deep Dive',
+    title: 't-SNE Skill Space',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-pink)"></span> What is t-SNE?</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">t-SNE (t-distributed Stochastic Neighbor Embedding) reduces our 384-dimensional skill embeddings to 2D for visualization. Similar skills end up close together on the plot. The result is a beautiful "skill map" showing natural clusters.</p>
+        <h3>What is t-SNE?</h3>
+        <p>t-SNE (t-distributed Stochastic Neighbor Embedding) reduces our 384-dimensional skill embeddings to 2D for visualization. Similar skills end up close together on the plot. The result is a skill map where natural clusters are easy to see.</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-green)"></span> What you see</h3>
+        <h3>What you see</h3>
         <div class="io-box">
           <div class="io-box-body">
 <span class="highlight">Cluster 1 (blue):</span> ML/AI skills<br>
@@ -570,15 +572,15 @@ COL216 Architecture: <span class="highlight-orange">28%</span> █████�
   },
 
   mlflow: {
-    title: '📊 MLflow Experiment Tracking — Deep Dive',
+    title: 'MLflow Experiment Tracking',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-teal)"></span> What is MLflow?</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">MLflow tracks every model training run. It logs hyperparameters, metrics, and model artifacts. Gives us a web UI at localhost:5000 showing all experiments. This is the "MLOps" part of our stack — it makes us look like a professional ML team.</p>
+        <h3>What is MLflow?</h3>
+        <p>MLflow tracks every model training run. It logs hyperparameters, metrics, and model artifacts. Gives us a web UI at localhost:5000 showing all experiments. This is the MLOps part of the stack.</p>
       </div>
       <div class="modal-section">
         <div class="io-box">
-          <div class="io-box-header process">⚙️ What Gets Logged</div>
+          <div class="io-box-header process">What Gets Logged</div>
           <div class="io-box-body">
 <span class="highlight-blue">Experiment: salary_prediction</span><br><br>
 <strong>Run 1:</strong> XGBoost(n=50, depth=4)<br>
@@ -587,8 +589,7 @@ COL216 Architecture: <span class="highlight-orange">28%</span> █████�
 &nbsp;&nbsp;RMSE: ₹2.9L | R²: 0.82 | MAE: ₹1.8L<br><br>
 <strong>Run 3:</strong> Ensemble(RF+XGB+GBM, n=100)<br>
 &nbsp;&nbsp;RMSE: ₹2.8L | <span class="highlight">R²: 0.84</span> | MAE: ₹1.7L ← best<br><br>
-<span class="dim">// Model artifact saved, versioned, reproducible</span><br>
-<span class="dim">// Show the MLflow UI to judges → instant credibility</span>
+<span class="dim">// Model artifact saved, versioned, reproducible</span>
           </div>
         </div>
       </div>
@@ -596,14 +597,14 @@ COL216 Architecture: <span class="highlight-orange">28%</span> █████�
   },
 
   rag: {
-    title: '🤖 Agentic RAG Career Counselor — Deep Dive',
+    title: 'Agentic RAG Career Counselor',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-purple)"></span> Why "Agentic" RAG?</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">Normal chatbots just call an LLM with a prompt. Our system is different — the LLM acts as an <strong>agent</strong> that decides which tools to use. When a user asks "What skills should I learn?", the LLM autonomously calls TalentMatch for gap analysis AND CompIntel for salary impact. No hardcoded if/else routing.</p>
+        <h3>Why "Agentic" RAG?</h3>
+        <p>Normal chatbots just call an LLM with a prompt. Our system is different — the LLM acts as an <strong>agent</strong> that decides which tools to use. When a user asks "What skills should I learn?", the LLM autonomously calls TalentMatch for gap analysis AND CompIntel for salary impact. No hardcoded if/else routing.</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-blue)"></span> Complete Flow (Step by Step)</h3>
+        <h3>Complete Flow (Step by Step)</h3>
         <div class="io-box">
           <div class="io-box-body">
 <span class="highlight-blue">1. USER QUERY:</span><br>
@@ -645,10 +646,10 @@ in Bangalore. What should I learn? How much can I earn?"<br><br>
   },
 
   streamlit: {
-    title: '📱 Streamlit Dashboard — Deep Dive',
+    title: 'Streamlit Dashboard',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-green)"></span> Multi-Page App Structure</h3>
+        <h3>Multi-Page App Structure</h3>
         <div class="io-box">
           <div class="io-box-body">
 <span class="highlight">Page 1: Home / Overview</span><br>
@@ -680,14 +681,14 @@ in Bangalore. What should I learn? How much can I earn?"<br><br>
   },
 
   fastapi: {
-    title: '⚡ FastAPI + OpenAPI — Deep Dive',
+    title: 'FastAPI + OpenAPI',
     html: `
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-cyan)"></span> API-First Architecture</h3>
-        <p style="color:var(--text-secondary); line-height:1.7;">Every intelligence module is exposed as a RESTful endpoint. FastAPI auto-generates Swagger docs at /docs — a professional API documentation page that looks production-ready. This shows judges the platform is extensible and integratable.</p>
+        <h3>API-First Architecture</h3>
+        <p>Every intelligence module is exposed as a RESTful endpoint. FastAPI auto-generates Swagger docs at /docs, so any HR platform can integrate without extra documentation.</p>
       </div>
       <div class="modal-section">
-        <h3><span class="dot" style="background:var(--accent-green)"></span> API Endpoints & Examples</h3>
+        <h3>API Endpoints & Examples</h3>
         <div class="io-box">
           <div class="io-box-body">
 <span class="highlight">GET /api/v1/skills/trending?role=data_scientist&city=bangalore</span><br>
@@ -702,7 +703,7 @@ in Bangalore. What should I learn? How much can I earn?"<br><br>
 → Returns RAG-grounded response<br><br>
 <span class="highlight">GET /api/v1/knowledge-graph?skill=python</span><br>
 → Returns connected roles + edges<br><br>
-<span class="dim">// Swagger UI at /docs — show this to judges</span>
+<span class="dim">// Swagger UI at /docs</span>
           </div>
         </div>
       </div>
@@ -710,31 +711,45 @@ in Bangalore. What should I learn? How much can I earn?"<br><br>
   }
 };
 
+// ── Detail drawer ──
+let lastFocus = null;
+
 function openModal(key) {
   const data = modalData[key];
   if (!data) return;
+  lastFocus = document.activeElement;
   document.getElementById('modalTitle').textContent = data.title;
-  document.getElementById('modalBody').innerHTML = data.html;
+  const body = document.getElementById('modalBody');
+  body.innerHTML = data.html;
+  body.parentElement.scrollTop = 0;
   document.getElementById('modalOverlay').classList.add('active');
   document.body.style.overflow = 'hidden';
+  document.querySelector('.modal-close').focus();
 }
 
 function closeModal(event) {
-  if (event.target === document.getElementById('modalOverlay')) {
-    closeModalDirect();
-  }
+  if (event.target === event.currentTarget) closeModalDirect();
 }
 
 function closeModalDirect() {
-  document.getElementById('modalOverlay').classList.remove('active');
+  const overlay = document.getElementById('modalOverlay');
+  if (!overlay.classList.contains('active')) return;
+  overlay.classList.remove('active');
   document.body.style.overflow = '';
+  if (lastFocus) lastFocus.focus();
 }
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModalDirect();
 });
 
-// ── Interactive Demo ──
+// Any element with data-modal opens its drawer; the title button inside handles keyboard.
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-modal]');
+  if (el) openModal(el.dataset.modal);
+});
+
+// ── Interactive demo ──
 const demoDatabase = {
   'Data Scientist': {
     idealSkills: ['Python', 'Machine Learning', 'SQL', 'TensorFlow', 'Statistics', 'Deep Learning', 'pandas', 'NLP', 'Spark', 'A/B Testing'],
@@ -758,188 +773,218 @@ const demoDatabase = {
   }
 };
 
+const HTML_ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+const escapeHtml = s => s.replace(/[&<>"']/g, c => HTML_ESCAPES[c]);
+const tag = (s, kind) => `<span class="skill-tag ${kind}">${escapeHtml(s)}</span>`;
+const lakh = n => `₹${n.toFixed(1)}L`;
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let demoTimers = [];
+
 function runInteractiveDemo() {
-  const skillsRaw = document.getElementById('demoSkills').value;
+  const userSkills = document.getElementById('demoSkills').value.split(',').map(s => s.trim()).filter(Boolean);
   const role = document.getElementById('demoRole').value;
   const city = document.getElementById('demoCity').value;
-  const userSkills = skillsRaw.split(',').map(s => s.trim()).filter(Boolean);
   const roleData = demoDatabase[role];
-  const matched = userSkills.filter(s => roleData.idealSkills.map(x => x.toLowerCase()).includes(s.toLowerCase()));
-  const missing = roleData.idealSkills.filter(s => !userSkills.map(x => x.toLowerCase()).includes(s.toLowerCase()));
+
+  const has = new Set(userSkills.map(s => s.toLowerCase()));
+  const matched = roleData.idealSkills.filter(s => has.has(s.toLowerCase()));
+  const missing = roleData.idealSkills.filter(s => !has.has(s.toLowerCase()));
+  const perSkill = Math.round(100 / roleData.idealSkills.length);
   const matchPct = Math.round((matched.length / roleData.idealSkills.length) * 100);
-  const salary = roleData.avgSalary[city];
-  const salaryLPA = (salary / 100000).toFixed(1);
-  const salaryBoostPerSkill = Math.round(salary * 0.08 / 100000 * 10) / 10;
+
+  const salary = roleData.avgSalary[city] / 100000;
+  const unit = Math.round(salary * 0.08 * 10) / 10;
+  const boost = i => unit * (2.5 - 0.5 * i);  // salary gain for the i-th ranked gap
+  const postings = (1200 + Math.floor(Math.random() * 800)).toLocaleString('en-IN');
+
+  const gapItems = n => missing.slice(0, n)
+    .map((s, i) => `<li>${tag(s, 'missing')} +${perSkill}% match · +${lakh(boost(i))}</li>`).join('');
+
+  const gapList = missing.length
+    ? `<ol class="gap-list">${gapItems(5)}</ol>`
+    : '<p>No gaps. You already cover every core skill for this role.</p>';
+
+  let whatIf = '<p>Nothing left to add for this role.</p>';
+  if (missing.length) {
+    whatIf = `<p>Add ${tag(missing[0], 'missing')} → <strong>${lakh(salary + boost(0))}</strong> (+${lakh(boost(0))})`;
+    if (missing[1]) whatIf += `<br>Add ${tag(missing[1], 'missing')} too → <strong>${lakh(salary + boost(0) + boost(1))}</strong> (+${lakh(boost(0) + boost(1))})`;
+    whatIf += '</p>';
+  }
+
+  const answer = missing.length
+    ? `<p>Learn these next:</p><ol class="gap-list">${gapItems(3)}</ol>`
+    : '<p>You already cover the core skills. The rising ones are where to look next.</p>';
 
   const steps = [
     {
-      title: '📥 Layer 1 — Data Ingestion',
-      detail: `Your query triggers a lookup across <strong>15,000+ processed job postings</strong> in MongoDB. Filtering for role="${role}" and city="${city}". Found <strong>${1200 + Math.floor(Math.random() * 800)}</strong> relevant postings.`
+      layer: 'Layer 1 · Ingestion',
+      title: 'Find the relevant postings',
+      detail: `<p>Filters 15,000+ processed postings in MongoDB for role “${role}” and city “${city}”. <strong>${postings}</strong> postings match.</p>`
     },
     {
-      title: '🏷️ Layer 2 — NLP Skill Extraction',
-      detail: `Your skills extracted and normalized via ESCO taxonomy:<br><div class="skill-tags mt-1">${userSkills.map(s => `<span class="skill-tag matched">${s} ✓</span>`).join('')}</div><br>These are embedded using MiniLM-L6-v2 and compared against the ${role} ideal skill vector.`
+      layer: 'Layer 2 · NLP',
+      title: 'Normalise your skills',
+      detail: userSkills.length
+        ? `<div class="skill-tags">${userSkills.map(s => tag(s, 'neutral')).join('')}</div><p>Mapped to ESCO names and embedded with MiniLM-L6-v2 for comparison against the ${role} skill vector.</p>`
+        : '<p>No skills entered, so everything below is measured from zero.</p>'
     },
     {
-      title: '🎯 Layer 3 — TalentMatch (Gap Engine)',
-      detail: `<strong style="color:var(--accent-green); font-size:1.3rem;">${matchPct}%</strong> Match Score<br><br>
-<strong>Matched:</strong> ${matched.map(s => `<span class="skill-tag matched">${s}</span>`).join(' ')}<br><br>
-<strong>Missing (top 5):</strong><br>
-${missing.slice(0, 5).map((s, i) => `${i + 1}. <span class="skill-tag missing">${s}</span> → +${Math.round((10 - i * 1.5))}% match | +₹${(salaryBoostPerSkill * (5 - i * 0.5)).toFixed(1)}L`).join('<br>')}`
+      layer: 'Layer 3 · TalentMatch',
+      title: 'Measure the gap',
+      detail: `<p class="big-num">${matchPct}%<small>match with ${role}</small></p>
+        ${matched.length ? `<div class="skill-tags">${matched.map(s => tag(s, 'matched')).join('')}</div>` : ''}
+        ${gapList}`
     },
     {
-      title: '💰 Layer 3 — CompIntel (Salary Prediction)',
-      detail: `<strong>Predicted Salary (${city}):</strong> <span style="color:var(--accent-orange); font-size:1.2rem;">₹${salaryLPA}L LPA</span><br><br>
-<strong>What-if simulations:</strong><br>
-• Add "${missing[0]}": ₹${(parseFloat(salaryLPA) + salaryBoostPerSkill * 2.5).toFixed(1)}L (+₹${(salaryBoostPerSkill * 2.5).toFixed(1)}L)<br>
-• Add "${missing[1]}": ₹${(parseFloat(salaryLPA) + salaryBoostPerSkill * 4).toFixed(1)}L (+₹${(salaryBoostPerSkill * 4).toFixed(1)}L total)<br><br>
-<strong>SHAP top factors:</strong> Experience > ${matched[0] || 'Python'} > City(${city})`
+      layer: 'Layer 3 · CompIntel',
+      title: 'Predict the salary',
+      detail: `<p class="big-num">${lakh(salary)}<small>per year in ${city}</small></p>${whatIf}
+        <p>Biggest SHAP factors: experience, ${escapeHtml(matched[0] || 'Python')}, city.</p>`
     },
     {
-      title: '📈 Layer 3 — SkillRadar (Trends)',
-      detail: `<strong>Trending skills for ${role} in India:</strong><br>
-🔥 Rising: ${roleData.trending.up.map(s => `<span class="skill-tag matched">${s}</span>`).join(' ')}<br>
-→ Stable: ${roleData.trending.stable.map(s => `<span class="skill-tag neutral">${s}</span>`).join(' ')}<br>
-📉 Dying: ${roleData.trending.down.map(s => `<span class="skill-tag missing">${s}</span>`).join(' ')}`
+      layer: 'Layer 3 · SkillRadar',
+      title: `Check what's moving for ${role}`,
+      detail: `<div class="trend-lines">
+        <div><span class="k">rising</span>${roleData.trending.up.map(s => tag(s, 'missing')).join('')}</div>
+        <div><span class="k">stable</span>${roleData.trending.stable.map(s => tag(s, 'matched')).join('')}</div>
+        <div><span class="k">declining</span>${roleData.trending.down.map(s => tag(s, 'neutral')).join('')}</div>
+      </div>`
     },
     {
-      title: '🤖 Layer 4 — Agentic RAG Response',
-      detail: `<div class="chat-preview"><div class="chat-header"><div class="chat-dots"><span></span><span></span><span></span></div>SkillForge AI Counselor</div><div class="chat-messages"><div class="chat-msg user">I know ${userSkills.join(', ')}. I want to become a ${role} in ${city}. What should I learn?</div><div class="chat-msg bot"><strong style="color:var(--accent-green)">✦ Based on ${1200 + Math.floor(Math.random() * 800)} ${role} postings in ${city}:</strong><br><br>Your current match: <strong style="color:var(--accent-green)">${matchPct}%</strong><br>Predicted salary: <strong style="color:var(--accent-orange)">₹${salaryLPA}L</strong><br><br><strong>Top 3 skills to learn:</strong><br>1. ${missing[0]} → +${Math.round(10)}% match | +₹${(salaryBoostPerSkill * 2.5).toFixed(1)}L<br>2. ${missing[1]} → +${Math.round(8)}% match | +₹${(salaryBoostPerSkill * 2).toFixed(1)}L<br>3. ${missing[2]} → +${Math.round(6)}% match | +₹${(salaryBoostPerSkill * 1.5).toFixed(1)}L<br><br><span style="color:var(--text-muted); font-size:0.75rem">🔥 Trending now: ${roleData.trending.up[0]} (+340% demand)</span></div></div></div>`
+      layer: 'Layer 4 · Counselor',
+      title: 'Answer in plain language',
+      detail: `<div class="chat">
+        <p class="chat-head">Counselor</p>
+        <div class="msg user"><span class="who">You</span><p>I know ${userSkills.length ? escapeHtml(userSkills.join(', ')) : 'nothing yet'}. I want to become a ${role} in ${city}. What should I learn?</p></div>
+        <div class="msg bot"><span class="who">SkillForge</span><div>
+          <p>Across ${postings} ${role} postings in ${city}, you match <strong>${matchPct}%</strong>. Expected salary is <strong>${lakh(salary)}</strong>.</p>
+          ${answer}
+          <p class="source">Trending now: ${roleData.trending.up[0]}. Sources: TalentMatch, CompIntel, SkillRadar</p>
+        </div></div>
+      </div>`
     }
   ];
 
-  const container = document.getElementById('demoSteps');
-  container.innerHTML = steps.map((step, i) => `
-    <div class="demo-step" id="demoStep${i}">
-      <div class="demo-step-indicator">
-        <div class="demo-step-dot">${i + 1}</div>
-        ${i < steps.length - 1 ? '<div class="demo-step-line"></div>' : ''}
-      </div>
-      <div class="demo-step-content">
-        <div class="demo-step-title">${step.title}</div>
-        <div class="demo-step-detail">${step.detail}</div>
-      </div>
-    </div>
-  `).join('');
+  demoTimers.forEach(clearTimeout);
+  demoTimers = [];
 
-  // Animate steps sequentially
-  steps.forEach((_, i) => {
-    setTimeout(() => {
-      const el = document.getElementById(`demoStep${i}`);
-      el.classList.add('active');
-      if (i > 0) document.getElementById(`demoStep${i - 1}`).classList.add('done');
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, i * 800);
-  });
-  setTimeout(() => {
-    document.getElementById(`demoStep${steps.length - 1}`).classList.add('done');
-  }, steps.length * 800);
+  const list = document.getElementById('demoSteps');
+  list.innerHTML = steps.map((s, i) => `
+    <li class="demo-step">
+      <span class="demo-num">0${i + 1}</span>
+      <div>
+        <h3><small>${s.layer}</small>${s.title}</h3>
+        <div class="demo-detail">${s.detail}</div>
+      </div>
+    </li>`).join('');
+
+  const items = [...list.children];
+  if (reduceMotion) {
+    items.forEach(el => el.classList.add('active'));
+    return;
+  }
+  items.forEach((el, i) => demoTimers.push(setTimeout(() => el.classList.add('active'), 150 + i * 650)));
 }
 
-// ── Full Demo (animates data packets through layers) ──
+// ── Walkthrough: follow a packet down the layers, then run the demo ──
 function runFullDemo() {
   expandAll();
-  // Animate packets
-  setTimeout(() => {
-    document.getElementById('packet12').classList.add('animate');
-    document.getElementById('layer1').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 300);
-  setTimeout(() => {
-    document.getElementById('packet12').classList.remove('animate');
-    document.getElementById('packet23').classList.add('animate');
-    document.getElementById('layer2').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 1800);
-  setTimeout(() => {
-    document.getElementById('packet23').classList.remove('animate');
-    document.getElementById('packet34').classList.add('animate');
-    document.getElementById('layer3').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 3300);
-  setTimeout(() => {
-    document.getElementById('packet34').classList.remove('animate');
-    document.getElementById('layer4').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 4800);
-  setTimeout(() => {
-    document.getElementById('demoRunner').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    runInteractiveDemo();
-  }, 5500);
+  demoTimers.forEach(clearTimeout);
+  demoTimers = [];
+
+  const at = (ms, fn) => demoTimers.push(setTimeout(fn, reduceMotion ? 0 : ms));
+  const pulse = id => {
+    const p = document.getElementById(id);
+    p.classList.remove('animate');
+    void p.offsetWidth;  // restart the animation
+    p.classList.add('animate');
+  };
+  const show = id => document.getElementById(id).scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+
+  at(300, () => show('layer1'));
+  at(1600, () => { pulse('packet12'); show('layer2'); });
+  at(3000, () => { pulse('packet23'); show('layer3'); });
+  at(4400, () => { pulse('packet34'); show('layer4'); });
+  at(5800, () => { show('demo'); runInteractiveDemo(); });
 }
 
-// ── Knowledge Graph (CSS-positioned nodes) ──
+// ── Knowledge graph ──
+const kgNodes = [
+  { id: 'Data Scientist', type: 'role', x: 0.2, y: 0.22 },
+  { id: 'ML Engineer', type: 'role', x: 0.5, y: 0.12 },
+  { id: 'Backend Dev', type: 'role', x: 0.82, y: 0.26 },
+  { id: 'Data Analyst', type: 'role', x: 0.14, y: 0.68 },
+  { id: 'Python', type: 'skill', x: 0.38, y: 0.45 },
+  { id: 'SQL', type: 'skill', x: 0.25, y: 0.52 },
+  { id: 'TensorFlow', type: 'skill', x: 0.36, y: 0.24 },
+  { id: 'Kubernetes', type: 'skill', x: 0.66, y: 0.36 },
+  { id: 'Docker', type: 'skill', x: 0.74, y: 0.52 },
+  { id: 'pandas', type: 'skill', x: 0.1, y: 0.42 },
+  { id: 'PyTorch', type: 'skill', x: 0.56, y: 0.28 },
+  { id: 'Node.js', type: 'skill', x: 0.9, y: 0.44 },
+  { id: 'Tableau', type: 'skill', x: 0.1, y: 0.88 },
+  { id: 'Statistics', type: 'skill', x: 0.32, y: 0.7 },
+  { id: 'AWS', type: 'skill', x: 0.72, y: 0.12 },
+  { id: 'MLOps', type: 'skill', x: 0.56, y: 0.55 },
+  { id: 'FinTech', type: 'sector', x: 0.46, y: 0.84 },
+  { id: 'E-commerce', type: 'sector', x: 0.66, y: 0.76 },
+  { id: 'Healthcare', type: 'sector', x: 0.86, y: 0.72 }
+];
+
+const kgEdges = [
+  ['Data Scientist', 'Python'], ['Data Scientist', 'SQL'], ['Data Scientist', 'TensorFlow'],
+  ['Data Scientist', 'pandas'], ['Data Scientist', 'Statistics'],
+  ['ML Engineer', 'Python'], ['ML Engineer', 'PyTorch'], ['ML Engineer', 'TensorFlow'],
+  ['ML Engineer', 'Kubernetes'], ['ML Engineer', 'Docker'], ['ML Engineer', 'MLOps'], ['ML Engineer', 'AWS'],
+  ['Backend Dev', 'Python'], ['Backend Dev', 'Node.js'], ['Backend Dev', 'Docker'],
+  ['Backend Dev', 'Kubernetes'], ['Backend Dev', 'AWS'],
+  ['Data Analyst', 'SQL'], ['Data Analyst', 'Python'], ['Data Analyst', 'pandas'],
+  ['Data Analyst', 'Tableau'], ['Data Analyst', 'Statistics'],
+  ['FinTech', 'Data Scientist'], ['FinTech', 'ML Engineer'],
+  ['E-commerce', 'Backend Dev'], ['E-commerce', 'Data Scientist'],
+  ['Healthcare', 'Data Analyst'], ['Healthcare', 'ML Engineer'],
+  ['Python', 'pandas'], ['Docker', 'Kubernetes']
+];
+
+// Positions are percentages, so the graph scales with its box and needs no resize handler.
 function renderKnowledgeGraph() {
-  const container = document.getElementById('kgContainer');
+  const box = document.getElementById('kgContainer');
   const svg = document.getElementById('kgSvg');
-  const w = container.offsetWidth;
-  const h = 350;
+  const pos = Object.fromEntries(kgNodes.map(n => [n.id, n]));
 
-  const nodes = [
-    // Roles (orange)
-    { id: 'Data Scientist', type: 'role', x: 0.2, y: 0.25 },
-    { id: 'ML Engineer', type: 'role', x: 0.5, y: 0.15 },
-    { id: 'Backend Dev', type: 'role', x: 0.8, y: 0.28 },
-    { id: 'Data Analyst', type: 'role', x: 0.15, y: 0.7 },
-    // Skills (blue)
-    { id: 'Python', type: 'skill', x: 0.35, y: 0.45 },
-    { id: 'SQL', type: 'skill', x: 0.25, y: 0.5 },
-    { id: 'TensorFlow', type: 'skill', x: 0.4, y: 0.2 },
-    { id: 'Kubernetes', type: 'skill', x: 0.65, y: 0.35 },
-    { id: 'Docker', type: 'skill', x: 0.72, y: 0.5 },
-    { id: 'pandas', type: 'skill', x: 0.18, y: 0.42 },
-    { id: 'PyTorch', type: 'skill', x: 0.55, y: 0.3 },
-    { id: 'Node.js', type: 'skill', x: 0.85, y: 0.45 },
-    { id: 'Tableau', type: 'skill', x: 0.1, y: 0.82 },
-    { id: 'Statistics', type: 'skill', x: 0.32, y: 0.68 },
-    { id: 'AWS', type: 'skill', x: 0.75, y: 0.15 },
-    { id: 'MLOps', type: 'skill', x: 0.6, y: 0.55 },
-    // Sectors (green)
-    { id: 'FinTech', type: 'sector', x: 0.45, y: 0.8 },
-    { id: 'E-commerce', type: 'sector', x: 0.65, y: 0.75 },
-    { id: 'Healthcare', type: 'sector', x: 0.85, y: 0.7 },
-  ];
+  svg.innerHTML = kgEdges.map(([a, b]) =>
+    `<line data-a="${a}" data-b="${b}" x1="${pos[a].x * 100}" y1="${pos[a].y * 100}" x2="${pos[b].x * 100}" y2="${pos[b].y * 100}" vector-effect="non-scaling-stroke"/>`
+  ).join('');
+  const lines = [...svg.querySelectorAll('line')];
 
-  const edges = [
-    ['Data Scientist', 'Python'], ['Data Scientist', 'SQL'], ['Data Scientist', 'TensorFlow'],
-    ['Data Scientist', 'pandas'], ['Data Scientist', 'Statistics'],
-    ['ML Engineer', 'Python'], ['ML Engineer', 'PyTorch'], ['ML Engineer', 'TensorFlow'],
-    ['ML Engineer', 'Kubernetes'], ['ML Engineer', 'Docker'], ['ML Engineer', 'MLOps'], ['ML Engineer', 'AWS'],
-    ['Backend Dev', 'Python'], ['Backend Dev', 'Node.js'], ['Backend Dev', 'Docker'],
-    ['Backend Dev', 'Kubernetes'], ['Backend Dev', 'AWS'],
-    ['Data Analyst', 'SQL'], ['Data Analyst', 'Python'], ['Data Analyst', 'pandas'],
-    ['Data Analyst', 'Tableau'], ['Data Analyst', 'Statistics'],
-    ['FinTech', 'Data Scientist'], ['FinTech', 'ML Engineer'],
-    ['E-commerce', 'Backend Dev'], ['E-commerce', 'Data Scientist'],
-    ['Healthcare', 'Data Analyst'], ['Healthcare', 'ML Engineer'],
-    ['Python', 'pandas'], ['Docker', 'Kubernetes'],
-  ];
-
-  // Draw edges
-  let svgContent = '';
-  edges.forEach(([from, to]) => {
-    const fromNode = nodes.find(n => n.id === from);
-    const toNode = nodes.find(n => n.id === to);
-    if (fromNode && toNode) {
-      svgContent += `<line x1="${fromNode.x * w}" y1="${fromNode.y * h}" x2="${toNode.x * w}" y2="${toNode.y * h}" />`;
-    }
+  const nodes = kgNodes.map(n => {
+    const el = document.createElement('button');
+    el.type = 'button';
+    el.className = `kg-node ${n.type}`;
+    el.textContent = n.id;
+    el.dataset.id = n.id;
+    el.style.left = `${n.x * 100}%`;
+    el.style.top = `${n.y * 100}%`;
+    box.appendChild(el);
+    return el;
   });
-  svg.innerHTML = svgContent;
 
-  // Draw nodes
-  const existingNodes = container.querySelectorAll('.kg-node');
-  existingNodes.forEach(n => n.remove());
+  const focusNode = id => {
+    box.classList.toggle('is-focused', Boolean(id));
+    const linked = new Set([id]);
+    lines.forEach(l => {
+      const on = l.dataset.a === id || l.dataset.b === id;
+      l.classList.toggle('on', on);
+      if (on) { linked.add(l.dataset.a); linked.add(l.dataset.b); }
+    });
+    nodes.forEach(el => el.classList.toggle('linked', linked.has(el.dataset.id)));
+  };
 
-  nodes.forEach(node => {
-    const el = document.createElement('div');
-    el.className = `kg-node ${node.type}`;
-    el.textContent = node.id;
-    el.style.left = `${node.x * w - 40}px`;
-    el.style.top = `${node.y * h - 14}px`;
-    el.title = `${node.type === 'role' ? '👔 Role' : node.type === 'skill' ? '🔧 Skill' : '🏭 Sector'}: ${node.id}`;
-    container.appendChild(el);
+  nodes.forEach(el => {
+    el.addEventListener('mouseenter', () => focusNode(el.dataset.id));
+    el.addEventListener('focus', () => focusNode(el.dataset.id));
+    el.addEventListener('mouseleave', () => focusNode(null));
+    el.addEventListener('blur', () => focusNode(null));
   });
 }
-
-// Re-render knowledge graph on resize
-let resizeTimer;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(renderKnowledgeGraph, 200);
-});

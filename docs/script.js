@@ -137,53 +137,6 @@ const modalData = {
     `
   },
 
-  university: {
-    title: 'University Syllabi',
-    html: `
-      <div class="modal-section">
-        <h3>What is this?</h3>
-        <p>Actual course syllabi from Indian engineering institutions — IITs, NITs, and state universities. We extract topics covered per course and compare them against what the job market actually demands.</p>
-      </div>
-      <div class="modal-section">
-        <h3>Full Processing Example</h3>
-        <div class="io-box">
-          <div class="io-box-header input">Raw Syllabus (PDF/text)</div>
-          <div class="io-box-body">
-<span class="highlight-blue">Course:</span> COL774 Machine Learning (IIT Delhi)<br>
-<span class="highlight-blue">Topics:</span><br>
-• Linear Regression and Logistic Regression<br>
-• Support Vector Machines<br>
-• Neural Networks and Backpropagation<br>
-• Decision Trees and Random Forests<br>
-• Clustering (K-Means, Hierarchical)<br>
-• Dimensionality Reduction (PCA, t-SNE)<br>
-• Bayesian Methods<br>
-• Ensemble Methods
-          </div>
-        </div>
-        <div class="flow-arrow">↓ NLP extracts skill terms + CurriculumSync scores</div>
-        <div class="io-box">
-          <div class="io-box-header output">CurriculumSync Output</div>
-          <div class="io-box-body">
-<span class="highlight">Extracted Skills:</span> ["Linear Regression", "SVM",<br>
-&nbsp;&nbsp;"Neural Networks", "Decision Trees", "Random Forest",<br>
-&nbsp;&nbsp;"K-Means", "PCA", "t-SNE", "Ensemble Methods"]<br><br>
-<span class="highlight-blue">Market Demand Match:</span><br>
-&nbsp;&nbsp;✅ Neural Networks → <span class="highlight">HIGH demand</span><br>
-&nbsp;&nbsp;✅ Random Forest → <span class="highlight">HIGH demand</span><br>
-&nbsp;&nbsp;✅ PCA → <span class="highlight-orange">MEDIUM demand</span><br>
-&nbsp;&nbsp;⚠️ SVM → <span class="highlight-orange">LOW demand (declining)</span><br><br>
-<span class="highlight-orange">Missing from syllabus (market wants):</span><br>
-&nbsp;&nbsp;❌ TensorFlow/PyTorch (practical frameworks)<br>
-&nbsp;&nbsp;❌ MLOps/Model Deployment<br>
-&nbsp;&nbsp;❌ LLMs/Transformers<br>
-&nbsp;&nbsp;❌ A/B Testing<br><br>
-<span class="highlight">Alignment Score: 62%</span>
-          </div>
-        </div>
-      </div>
-    `
-  },
 
   resumes: {
     title: 'Candidate Resumes',
@@ -393,18 +346,17 @@ experience. Must know CI/CD pipelines and agile.'"<br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;TensorFlow(72%), Statistics(68%), Spark(55%),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Deep Learning(52%), NLP(45%), Cloud(42%)...<br><br>
 <span class="highlight-blue">Step 3:</span> Embed user skills + role skills<br>
-&nbsp;&nbsp;→ Cosine similarity: <span class="highlight">0.42 (42% match)</span><br><br>
-<span class="highlight-blue">Step 4:</span> Rank missing skills by impact<br>
-&nbsp;&nbsp;→ For each missing skill, compute:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;match_boost = how much match % improves<br>
-&nbsp;&nbsp;&nbsp;&nbsp;salary_impact = from CompIntel model
+&nbsp;&nbsp;→ Demand-weighted fit: <span class="highlight">42%</span><br><br>
+<span class="highlight-blue">Step 4:</span> Rank missing skills by demand<br>
+&nbsp;&nbsp;→ The skill most postings ask for comes first<br>
+&nbsp;&nbsp;→ Salary is left to CompIntel, which prices the whole profile
           </div>
         </div>
         <div class="flow-arrow">↓</div>
         <div class="io-box">
           <div class="io-box-header output">Final Output</div>
           <div class="io-box-body">
-<span class="highlight">Match Score: 42%</span><br><br>
+<span class="highlight">Fit: 42%</span><br><br>
 <strong>Your matched skills:</strong>
 <div class="skill-tags mt-1">
   <span class="skill-tag matched">Python ✓</span>
@@ -412,12 +364,12 @@ experience. Must know CI/CD pipelines and agile.'"<br><br>
   <span class="skill-tag matched">pandas ✓</span>
   <span class="skill-tag matched">NumPy ✓</span>
 </div><br>
-<strong>Skills to learn (ranked by impact):</strong><br>
-1. <span class="skill-tag missing">Machine Learning</span> → +18% match | +₹2.1L/yr<br>
-2. <span class="skill-tag missing">TensorFlow</span> → +14% match | +₹1.8L/yr<br>
-3. <span class="skill-tag missing">Statistics</span> → +12% match | +₹1.2L/yr<br>
-4. <span class="skill-tag missing">Deep Learning</span> → +8% match | +₹1.5L/yr<br>
-5. <span class="skill-tag missing">Apache Spark</span> → +6% match | +₹0.9L/yr
+<strong>Learn next (ranked by how often postings ask for it):</strong><br>
+1. <span class="skill-tag missing">Machine Learning</span> → asked for in 88% of postings<br>
+2. <span class="skill-tag missing">TensorFlow</span> → 72%<br>
+3. <span class="skill-tag missing">Statistics</span> → 68%<br>
+4. <span class="skill-tag missing">Apache Spark</span> → 55%<br>
+5. <span class="skill-tag missing">Deep Learning</span> → 52%
           </div>
         </div>
       </div>
@@ -429,7 +381,7 @@ experience. Must know CI/CD pipelines and agile.'"<br><br>
     html: `
       <div class="modal-section">
         <h3>How CompIntel Works</h3>
-        <p>A multi-model ensemble (RandomForest + XGBoost + GradientBoosting) trained on Indian salary data. Predicts salary from skills + experience + location + education. Includes a "What-if" simulator and SHAP explainability.</p>
+        <p>A multi-model ensemble (RandomForest + XGBoost + GradientBoosting) trained on Indian salary data. Predicts a salary range for a whole profile: skills, experience, location and education together. SHAP shows which parts of the profile push the range up or down.</p>
       </div>
       <div class="modal-section">
         <h3>Model Training</h3>
@@ -452,64 +404,64 @@ experience. Must know CI/CD pipelines and agile.'"<br><br>
         </div>
       </div>
       <div class="modal-section">
-        <h3>"What-if" Simulator Demo</h3>
+        <h3>Your range, now and after</h3>
         <div class="io-box">
           <div class="io-box-body">
-<span class="highlight-orange">Base profile:</span><br>
-Skills: Python, SQL | Exp: 3yr | City: Bangalore<br>
-<span class="highlight">Predicted salary: ₹12.8 LPA</span><br><br>
-<span class="highlight-orange">What if: Add "Machine Learning"?</span><br>
-<span class="highlight">New prediction: ₹15.6 LPA (+₹2.8L)</span><br><br>
-<span class="highlight-orange">What if: Add "Kubernetes" too?</span><br>
-<span class="highlight">New prediction: ₹17.2 LPA (+₹4.4L total)</span><br><br>
-<span class="highlight-orange">What if: Move to Hyderabad?</span><br>
-<span class="highlight">New prediction: ₹15.8 LPA (-₹1.4L from BLR)</span><br><br>
-<span class="dim">// The slider UI in Streamlit makes this interactive</span><br>
-<span class="dim">// Toggle a skill and watch the prediction change live</span>
+<span class="highlight-orange">Profile today:</span> Python, SQL · 3 yrs · Bangalore<br>
+<span class="highlight">Expected range: ₹11.5 – 14.1 LPA</span><br><br>
+<span class="highlight-orange">Same profile after closing the top 3 gaps</span> (ML, TensorFlow, Statistics):<br>
+<span class="highlight">Expected range: ₹15.2 – 18.6 LPA</span><br><br>
+<span class="dim">// We price the profile, never a single skill. Learning Docker alone</span><br>
+<span class="dim">// doesn't add a fixed ₹X; it moves you into a different band of postings.</span>
           </div>
         </div>
       </div>
     `
   },
 
-  curriculumsync: {
-    title: 'CurriculumSync — Alignment Scorer',
+  rolefit: {
+    title: 'RoleFit — Opportunity Finder',
     html: `
       <div class="modal-section">
-        <h3>How CurriculumSync Works</h3>
-        <p>Compares what universities teach vs. what the market demands. Scores each course by skill overlap. Auto-generates a PDF report for academic deans with specific recommendations.</p>
+        <h3>How RoleFit works</h3>
+        <p>TalentMatch tells you how far you are from the role you picked. RoleFit asks the opposite question: given the skills you already have, which roles in the market do you fit today, and what would they pay you? It catches the cases people miss, like being over-qualified for the role they are applying to, or already fitting a better-paid one.</p>
       </div>
       <div class="modal-section">
-        <h3>Full Pipeline Example</h3>
+        <h3>Step by step</h3>
         <div class="io-box">
-          <div class="io-box-header input">Input: IIT Delhi CS Department</div>
+          <div class="io-box-header process">Processing</div>
           <div class="io-box-body">
-8 courses analyzed:<br>
-COL100, COL106, COL216, COL226, COL331,<br>
-COL672, COL774, COL870
+<span class="highlight-blue">Step 1:</span> Take the normalised skill list from Layer 2<br><br>
+<span class="highlight-blue">Step 2:</span> Score it against the ideal skill vector of every role (50+)<br>
+&nbsp;&nbsp;→ fit = demand-weighted share of the role's core skills you have<br><br>
+<span class="highlight-blue">Step 3:</span> For each role, ask CompIntel for the range at <em>your</em> fit level<br>
+&nbsp;&nbsp;→ not the role's average, the band people with your coverage actually get<br><br>
+<span class="highlight-blue">Step 4:</span> Count open postings in your city from processed_postings<br><br>
+<span class="highlight-blue">Step 5:</span> Flag the interesting cases<br>
+&nbsp;&nbsp;→ <span class="highlight">closer fit</span>: another role fits you better than your target<br>
+&nbsp;&nbsp;→ <span class="highlight">pays more</span>: a role you fit nearly as well has a higher range<br>
+&nbsp;&nbsp;→ <span class="highlight">over-qualified</span>: you cover 85%+ of your target, so aim higher
+          </div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <h3>Sample output</h3>
+        <div class="io-box">
+          <div class="io-box-header input">Input</div>
+          <div class="io-box-body">
+<span class="highlight-blue">Skills:</span> Python, SQL, pandas, Excel, Tableau, Statistics<br>
+<span class="highlight-blue">Target:</span> Data Analyst · <span class="highlight-blue">City:</span> Bangalore
           </div>
         </div>
         <div class="flow-arrow">↓</div>
         <div class="io-box">
-          <div class="io-box-header output">Alignment Report</div>
+          <div class="io-box-header output">Output</div>
           <div class="io-box-body">
-<span class="highlight">Overall Department Score: 68%</span><br><br>
-<strong>Course-by-Course:</strong><br>
-COL106 Data Structures: <span class="highlight">91%</span> ████████████████████▓<br>
-COL774 Machine Learning: <span class="highlight">82%</span> ██████████████████░░<br>
-COL672 NLP: <span class="highlight">75%</span> █████████████████░░░<br>
-COL226 Programming: <span class="highlight-blue">65%</span> ███████████████░░░░░<br>
-COL331 OS: <span class="highlight-orange">45%</span> ███████████░░░░░░░░░<br>
-COL216 Architecture: <span class="highlight-orange">28%</span> ████████░░░░░░░░░░░░<br><br>
-<strong>✅ Strengths:</strong><br>
-→ Strong ML/AI curriculum<br>
-→ Good data structures foundation<br><br>
-<strong>❌ Gaps to Address:</strong><br>
-→ No MLOps/Deployment curriculum<br>
-→ No Cloud Computing courses<br>
-→ Missing: LLMs, Transformers, LangChain<br>
-→ No A/B Testing / Experimentation course<br><br>
-<span class="dim">→ Auto-generated PDF report: "IIT_Delhi_CS_Gap_Report.pdf"</span>
+Data Analyst &nbsp;&nbsp;&nbsp;fit <span class="highlight">86%</span> · 2,800 open · ₹13.3 – 16.3L<br>
+Data Scientist &nbsp;fit <span class="highlight">48%</span> · 2,400 open · ₹18.6 – 22.8L<br>
+Data Engineer &nbsp;&nbsp;fit 35% · 1,900 open · ₹16.1 – 19.7L<br><br>
+<span class="highlight">Over-qualified:</span> you already cover 86% of Data Analyst postings.<br>
+Data Scientist pays more, and Machine Learning is the biggest gap in the way.
           </div>
         </div>
       </div>
@@ -621,11 +573,13 @@ in Bangalore. What should I learn? How much can I earn?"<br><br>
 
 <span class="highlight-orange">3. FUNCTION CALLING EXECUTES:</span><br>
 → TalentMatch returns:<br>
-&nbsp;&nbsp;{match: 42%, gaps: [{skill:"ML", boost:18%},<br>
-&nbsp;&nbsp;&nbsp;{skill:"TensorFlow", boost:14%}, ...]}<br>
+&nbsp;&nbsp;{fit: 42%, gaps: [{skill:"ML", demand:88%},<br>
+&nbsp;&nbsp;&nbsp;{skill:"TensorFlow", demand:72%}, ...]}<br>
 → CompIntel returns:<br>
-&nbsp;&nbsp;{predicted_salary: "₹12.8L",<br>
-&nbsp;&nbsp;&nbsp;with_ml: "₹15.6L (+₹2.8L)"}<br><br>
+&nbsp;&nbsp;{range_today: "₹11.5–14.1L",<br>
+&nbsp;&nbsp;&nbsp;range_gaps_closed: "₹15.2–18.6L"}<br>
+→ RoleFit returns:<br>
+&nbsp;&nbsp;{best_fit: "Data Analyst", fit: 74%, open: 2800}<br><br>
 
 <span class="highlight">4. CHROMADB RETRIEVAL:</span><br>
 → Query: "Data Scientist skills Bangalore"<br>
@@ -661,12 +615,11 @@ in Bangalore. What should I learn? How much can I earn?"<br><br>
 → Resume upload → gap analysis<br>
 → Visual skill match bars<br><br>
 <span class="highlight">Page 4: CompIntel Salary Predictor</span><br>
-→ Skill sliders → salary prediction<br>
+→ Profile inputs → salary range<br>
 → SHAP waterfall chart<br>
-→ What-if simulator<br><br>
-<span class="highlight">Page 5: CurriculumSync</span><br>
-→ University selector → alignment report<br>
-→ PDF download button<br><br>
+→ Range today vs. gaps closed<br><br>
+<span class="highlight">Page 5: RoleFit</span><br>
+→ Roles you already fit, open postings, your range in each<br><br>
 <span class="highlight">Page 6: Knowledge Graph Explorer</span><br>
 → Embedded pyvis interactive graph<br><br>
 <span class="highlight">Page 7: AI Career Counselor</span><br>
@@ -750,117 +703,201 @@ document.addEventListener('click', e => {
 });
 
 // ── Interactive demo ──
+// skills: [name, % of postings for this role that ask for it]
 const demoDatabase = {
   'Data Scientist': {
-    idealSkills: ['Python', 'Machine Learning', 'SQL', 'TensorFlow', 'Statistics', 'Deep Learning', 'pandas', 'NLP', 'Spark', 'A/B Testing'],
+    skills: [['Python', 95], ['Machine Learning', 88], ['SQL', 82], ['TensorFlow', 72], ['Statistics', 68], ['pandas', 64], ['Spark', 55], ['Deep Learning', 52], ['NLP', 45], ['A/B Testing', 38]],
     avgSalary: { Bangalore: 2240000, Hyderabad: 1980000, Mumbai: 2100000, 'Delhi NCR': 1950000, Pune: 1850000 },
+    postings: 2400,
     trending: { up: ['LangChain', 'MLOps', 'Kubernetes'], stable: ['Python', 'SQL'], down: ['Hadoop', 'SAS'] }
   },
   'ML Engineer': {
-    idealSkills: ['Python', 'PyTorch', 'TensorFlow', 'Kubernetes', 'Docker', 'MLOps', 'SQL', 'AWS', 'CI/CD', 'Spark'],
+    skills: [['Python', 94], ['PyTorch', 76], ['Docker', 71], ['TensorFlow', 68], ['Kubernetes', 62], ['AWS', 60], ['MLOps', 58], ['SQL', 55], ['CI/CD', 49], ['Spark', 41]],
     avgSalary: { Bangalore: 2600000, Hyderabad: 2300000, Mumbai: 2450000, 'Delhi NCR': 2200000, Pune: 2100000 },
+    postings: 1650,
     trending: { up: ['LangChain', 'LLMs', 'Vector DBs'], stable: ['PyTorch', 'Docker'], down: ['Keras', 'Theano'] }
   },
+  'Data Engineer': {
+    skills: [['SQL', 90], ['Python', 86], ['Spark', 71], ['ETL', 67], ['AWS', 62], ['Airflow', 58], ['Kafka', 46], ['Docker', 44], ['Snowflake', 38], ['dbt', 35]],
+    avgSalary: { Bangalore: 2000000, Hyderabad: 1800000, Mumbai: 1900000, 'Delhi NCR': 1750000, Pune: 1650000 },
+    postings: 1900,
+    trending: { up: ['dbt', 'Snowflake', 'Databricks'], stable: ['SQL', 'Spark'], down: ['Hadoop', 'Informatica'] }
+  },
   'Backend Developer': {
-    idealSkills: ['Python', 'Node.js', 'SQL', 'Docker', 'REST APIs', 'PostgreSQL', 'Redis', 'Git', 'AWS', 'Microservices'],
+    skills: [['SQL', 81], ['REST APIs', 77], ['Git', 72], ['Docker', 66], ['Node.js', 64], ['PostgreSQL', 59], ['Python', 58], ['AWS', 54], ['Microservices', 48], ['Redis', 41]],
     avgSalary: { Bangalore: 1800000, Hyderabad: 1550000, Mumbai: 1700000, 'Delhi NCR': 1600000, Pune: 1500000 },
+    postings: 3900,
     trending: { up: ['Rust', 'Go', 'gRPC'], stable: ['Node.js', 'Python'], down: ['PHP', 'jQuery'] }
   },
+  'DevOps Engineer': {
+    skills: [['Docker', 88], ['Kubernetes', 81], ['CI/CD', 79], ['AWS', 76], ['Linux', 74], ['Git', 70], ['Terraform', 58], ['Python', 52], ['Jenkins', 49], ['Monitoring', 41]],
+    avgSalary: { Bangalore: 1900000, Hyderabad: 1700000, Mumbai: 1750000, 'Delhi NCR': 1650000, Pune: 1600000 },
+    postings: 2100,
+    trending: { up: ['Platform Engineering', 'ArgoCD', 'OpenTelemetry'], stable: ['Kubernetes', 'Terraform'], down: ['Jenkins', 'Chef'] }
+  },
+  'Full Stack Developer': {
+    skills: [['JavaScript', 92], ['React', 81], ['Git', 76], ['Node.js', 74], ['REST APIs', 70], ['SQL', 62], ['TypeScript', 58], ['MongoDB', 45], ['Docker', 40], ['AWS', 38]],
+    avgSalary: { Bangalore: 1600000, Hyderabad: 1400000, Mumbai: 1500000, 'Delhi NCR': 1450000, Pune: 1350000 },
+    postings: 4300,
+    trending: { up: ['Next.js', 'TypeScript', 'tRPC'], stable: ['React', 'Node.js'], down: ['jQuery', 'AngularJS'] }
+  },
   'Data Analyst': {
-    idealSkills: ['SQL', 'Python', 'Excel', 'Tableau', 'PowerBI', 'pandas', 'Statistics', 'R', 'Git', 'Looker'],
+    skills: [['SQL', 92], ['Excel', 84], ['Python', 66], ['Data Visualization', 63], ['PowerBI', 61], ['Tableau', 58], ['Statistics', 57], ['pandas', 44], ['R', 31], ['Looker', 24]],
     avgSalary: { Bangalore: 1200000, Hyderabad: 1050000, Mumbai: 1100000, 'Delhi NCR': 1000000, Pune: 950000 },
+    postings: 2800,
     trending: { up: ['dbt', 'Looker', 'Python'], stable: ['SQL', 'Excel'], down: ['SAS', 'SPSS'] }
   }
+};
+
+// Share of each role's postings found in a city (Bangalore = 1)
+const cityShare = { Bangalore: 1, Hyderabad: 0.62, Mumbai: 0.55, 'Delhi NCR': 0.58, Pune: 0.41 };
+
+// A few of the ESCO normalisations Layer 2 performs
+const skillAliases = {
+  ml: 'machine learning', dl: 'deep learning', js: 'javascript', ts: 'typescript', tf: 'tensorflow',
+  k8s: 'kubernetes', postgres: 'postgresql', node: 'node.js', nodejs: 'node.js', reactjs: 'react',
+  'power bi': 'powerbi', stats: 'statistics', 'apache spark': 'spark', pyspark: 'spark', 'amazon web services': 'aws'
 };
 
 const HTML_ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 const escapeHtml = s => s.replace(/[&<>"']/g, c => HTML_ESCAPES[c]);
 const tag = (s, kind) => `<span class="skill-tag ${kind}">${escapeHtml(s)}</span>`;
-const lakh = n => `₹${n.toFixed(1)}L`;
+const lakhRange = ([lo, hi]) => `₹${lo.toFixed(1)} – ${hi.toFixed(1)}L`;
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Demand-weighted share of a role's core skills the user has (0..1)
+function roleFit(role, has) {
+  const total = role.skills.reduce((sum, [, d]) => sum + d, 0);
+  const got = role.skills.reduce((sum, [name, d]) => sum + (has.has(name.toLowerCase()) ? d : 0), 0);
+  return got / total;
+}
+
+// Expected range for a profile at a given fit: 0.75x the city average at zero fit, 1.2x at full fit
+function salaryRange(role, city, fit) {
+  const mid = (role.avgSalary[city] / 100000) * (0.75 + 0.45 * fit);
+  return [mid * 0.9, mid * 1.1];
+}
 
 let demoTimers = [];
 
 function runInteractiveDemo() {
-  const userSkills = document.getElementById('demoSkills').value.split(',').map(s => s.trim()).filter(Boolean);
-  const role = document.getElementById('demoRole').value;
+  const raw = document.getElementById('demoSkills').value.split(',').map(s => s.trim()).filter(Boolean);
+  const targetName = document.getElementById('demoRole').value;
   const city = document.getElementById('demoCity').value;
-  const roleData = demoDatabase[role];
+  const target = demoDatabase[targetName];
 
-  const has = new Set(userSkills.map(s => s.toLowerCase()));
-  const matched = roleData.idealSkills.filter(s => has.has(s.toLowerCase()));
-  const missing = roleData.idealSkills.filter(s => !has.has(s.toLowerCase()));
-  const perSkill = Math.round(100 / roleData.idealSkills.length);
-  const matchPct = Math.round((matched.length / roleData.idealSkills.length) * 100);
+  const canonical = Object.fromEntries(Object.values(demoDatabase).flatMap(r => r.skills.map(([n]) => [n.toLowerCase(), n])));
+  const keys = raw.map(s => skillAliases[s.toLowerCase()] || s.toLowerCase());
+  const normalised = keys.map((k, i) => canonical[k] || raw[i]);  // display names
+  const has = new Set(keys);
+  const renamed = raw.filter(s => skillAliases[s.toLowerCase()]);
 
-  const salary = roleData.avgSalary[city] / 100000;
-  const unit = Math.round(salary * 0.08 * 10) / 10;
-  const boost = i => unit * (2.5 - 0.5 * i);  // salary gain for the i-th ranked gap
-  const postings = (1200 + Math.floor(Math.random() * 800)).toLocaleString('en-IN');
+  const matched = target.skills.filter(([n]) => has.has(n.toLowerCase())).map(([n]) => n);
+  const missing = target.skills.filter(([n]) => !has.has(n.toLowerCase()));  // already sorted by demand
+  const fit = roleFit(target, has);
+  const fitPct = Math.round(fit * 100);
+  const openHere = r => Math.round(r.postings * cityShare[city]).toLocaleString('en-IN');
 
-  const gapItems = n => missing.slice(0, n)
-    .map((s, i) => `<li>${tag(s, 'missing')} +${perSkill}% match · +${lakh(boost(i))}</li>`).join('');
+  // What closing the top 3 gaps would do to fit and range
+  const closed = new Set([...has, ...missing.slice(0, 3).map(([n]) => n.toLowerCase())]);
+  const fitAfter = roleFit(target, closed);
 
-  const gapList = missing.length
-    ? `<ol class="gap-list">${gapItems(5)}</ol>`
-    : '<p>No gaps. You already cover every core skill for this role.</p>';
+  // RoleFit: every role, scored on the same skills
+  const roles = Object.entries(demoDatabase).map(([name, r]) => {
+    const f = roleFit(r, has);
+    return { name, fit: f, range: salaryRange(r, city, f), open: openHere(r) };
+  }).sort((a, b) => b.fit - a.fit);
+  const targetRow = roles.find(r => r.name === targetName);
+  const bestFit = roles[0];
+  const mid = r => (r.range[0] + r.range[1]) / 2;
+  // Best-fitting role that pays clearly more than the target at the user's current level
+  const betterPaid = roles.find(r => r.name !== targetName && r.fit >= 0.4 && mid(r) > mid(targetRow) * 1.1);
 
-  let whatIf = '<p>Nothing left to add for this role.</p>';
-  if (missing.length) {
-    whatIf = `<p>Add ${tag(missing[0], 'missing')} → <strong>${lakh(salary + boost(0))}</strong> (+${lakh(boost(0))})`;
-    if (missing[1]) whatIf += `<br>Add ${tag(missing[1], 'missing')} too → <strong>${lakh(salary + boost(0) + boost(1))}</strong> (+${lakh(boost(0) + boost(1))})`;
-    whatIf += '</p>';
+  let verdict;
+  if (fit >= 0.85 && betterPaid) {
+    const next = demoDatabase[betterPaid.name].skills.filter(([n]) => !has.has(n.toLowerCase())).slice(0, 2).map(([n]) => `<strong>${n}</strong>`);
+    verdict = `You're <strong>over-qualified</strong> for ${targetName}: you already cover ${fitPct}% of it. <strong>${betterPaid.name}</strong> pays ${lakhRange(betterPaid.range)} at your level and you fit ${Math.round(betterPaid.fit * 100)}% of it already${next.length ? `. ${next.join(' and ')} would close most of the gap` : ''}.`;
+  } else if (betterPaid && betterPaid.fit >= fit - 0.1) {
+    verdict = `<strong>${betterPaid.name}</strong> fits you about as well (${Math.round(betterPaid.fit * 100)}%) and pays more: ${lakhRange(betterPaid.range)}.`;
+  } else if (bestFit.name !== targetName && bestFit.fit - fit >= 0.1) {
+    verdict = `You're a closer fit for <strong>${bestFit.name}</strong> right now (${Math.round(bestFit.fit * 100)}% vs ${fitPct}%). Good as a stepping stone while you close the ${targetName} gaps.`;
+  } else if (fit >= 0.85) {
+    verdict = `You already clear most ${targetName} postings. Apply now, and aim for the upper end of the range.`;
+  } else {
+    verdict = `${targetName} is already your best match. Closing the gaps above is the fastest way up.`;
   }
 
-  const answer = missing.length
-    ? `<p>Learn these next:</p><ol class="gap-list">${gapItems(3)}</ol>`
-    : '<p>You already cover the core skills. The rising ones are where to look next.</p>';
+  const gapTable = missing.length
+    ? `<table class="demo-table">
+        <thead><tr><th>Learn next</th><th>Asked for in</th></tr></thead>
+        <tbody>${missing.slice(0, 5).map(([n, d]) => `<tr><td>${tag(n, 'missing')}</td><td><span class="meter"><span style="--w:${d}%"></span></span>${d}% of postings</td></tr>`).join('')}</tbody>
+      </table>`
+    : '<p>No gaps. You cover every core skill for this role.</p>';
+
+  const roleTable = `<table class="demo-table">
+      <thead><tr><th>Role</th><th>Your fit</th><th>Open in ${city}</th><th>Your range</th></tr></thead>
+      <tbody>${roles.slice(0, 5).map(r => `<tr${r.name === targetName ? ' class="is-target"' : ''}>
+        <td>${r.name}${r.name === targetName ? ' <small>target</small>' : ''}</td>
+        <td><span class="meter"><span style="--w:${Math.round(r.fit * 100)}%"></span></span>${Math.round(r.fit * 100)}%</td>
+        <td>${r.open}</td>
+        <td>${lakhRange(r.range)}</td></tr>`).join('')}</tbody>
+    </table>`;
 
   const steps = [
     {
       layer: 'Layer 1 · Ingestion',
       title: 'Find the relevant postings',
-      detail: `<p>Filters 15,000+ processed postings in MongoDB for role “${role}” and city “${city}”. <strong>${postings}</strong> postings match.</p>`
+      detail: `<p>Filters 15,000+ processed postings in MongoDB for role “${targetName}” in ${city}. <strong>${openHere(target)}</strong> postings match.</p>`
     },
     {
       layer: 'Layer 2 · NLP',
       title: 'Normalise your skills',
-      detail: userSkills.length
-        ? `<div class="skill-tags">${userSkills.map(s => tag(s, 'neutral')).join('')}</div><p>Mapped to ESCO names and embedded with MiniLM-L6-v2 for comparison against the ${role} skill vector.</p>`
+      detail: raw.length
+        ? `<div class="skill-tags">${normalised.map(s => tag(s, 'neutral')).join('')}</div>
+           <p>${renamed.length ? `Mapped to ESCO names (${renamed.map(s => `“${escapeHtml(s)}” → ${escapeHtml(canonical[skillAliases[s.toLowerCase()]] || skillAliases[s.toLowerCase()])}`).join(', ')}), then embedded` : 'Mapped to ESCO names and embedded'} with MiniLM-L6-v2.</p>`
         : '<p>No skills entered, so everything below is measured from zero.</p>'
     },
     {
       layer: 'Layer 3 · TalentMatch',
-      title: 'Measure the gap',
-      detail: `<p class="big-num">${matchPct}%<small>match with ${role}</small></p>
+      title: `How close you are to ${targetName}`,
+      detail: `<p class="big-num">${fitPct}%<small>fit, weighted by how often postings ask for each skill</small></p>
         ${matched.length ? `<div class="skill-tags">${matched.map(s => tag(s, 'matched')).join('')}</div>` : ''}
-        ${gapList}`
+        ${gapTable}`
     },
     {
       layer: 'Layer 3 · CompIntel',
-      title: 'Predict the salary',
-      detail: `<p class="big-num">${lakh(salary)}<small>per year in ${city}</small></p>${whatIf}
-        <p>Biggest SHAP factors: experience, ${escapeHtml(matched[0] || 'Python')}, city.</p>`
+      title: 'What you can expect to earn',
+      detail: `<div class="range-compare">
+          <div><span class="k">today</span><p class="big-num">${lakhRange(salaryRange(target, city, fit))}</p><small>${targetName} in ${city} at ${fitPct}% fit</small></div>
+          ${missing.length ? `<div><span class="k">top ${Math.min(3, missing.length)} gaps closed</span><p class="big-num">${lakhRange(salaryRange(target, city, fitAfter))}</p><small>adds ${missing.slice(0, 3).map(([n]) => escapeHtml(n)).join(', ')} → ${Math.round(fitAfter * 100)}% fit</small></div>` : ''}
+        </div>
+        <p class="note">Ranges price your whole profile against people with similar coverage. No single skill carries a fixed rupee value.</p>`
+    },
+    {
+      layer: 'Layer 3 · RoleFit',
+      title: 'Roles you already fit',
+      detail: `${roleTable}<p class="verdict">${verdict}</p>`
     },
     {
       layer: 'Layer 3 · SkillRadar',
-      title: `Check what's moving for ${role}`,
+      title: `What's moving for ${targetName}`,
       detail: `<div class="trend-lines">
-        <div><span class="k">rising</span>${roleData.trending.up.map(s => tag(s, 'missing')).join('')}</div>
-        <div><span class="k">stable</span>${roleData.trending.stable.map(s => tag(s, 'matched')).join('')}</div>
-        <div><span class="k">declining</span>${roleData.trending.down.map(s => tag(s, 'neutral')).join('')}</div>
+        <div><span class="k">rising</span>${target.trending.up.map(s => tag(s, 'missing')).join('')}</div>
+        <div><span class="k">stable</span>${target.trending.stable.map(s => tag(s, 'matched')).join('')}</div>
+        <div><span class="k">declining</span>${target.trending.down.map(s => tag(s, 'neutral')).join('')}</div>
       </div>`
     },
     {
       layer: 'Layer 4 · Counselor',
-      title: 'Answer in plain language',
+      title: 'The answer, in plain language',
       detail: `<div class="chat">
         <p class="chat-head">Counselor</p>
-        <div class="msg user"><span class="who">You</span><p>I know ${userSkills.length ? escapeHtml(userSkills.join(', ')) : 'nothing yet'}. I want to become a ${role} in ${city}. What should I learn?</p></div>
+        <div class="msg user"><span class="who">You</span><p>I know ${raw.length ? escapeHtml(raw.join(', ')) : 'nothing yet'}. I want to become a ${targetName} in ${city}. Where do I stand?</p></div>
         <div class="msg bot"><span class="who">SkillForge</span><div>
-          <p>Across ${postings} ${role} postings in ${city}, you match <strong>${matchPct}%</strong>. Expected salary is <strong>${lakh(salary)}</strong>.</p>
-          ${answer}
-          <p class="source">Trending now: ${roleData.trending.up[0]}. Sources: TalentMatch, CompIntel, SkillRadar</p>
+          <p>You cover <strong>${fitPct}%</strong> of what ${targetName} postings in ${city} ask for, which puts you around <strong>${lakhRange(salaryRange(target, city, fit))}</strong>.</p>
+          ${missing.length ? `<p>Learn ${missing.slice(0, 3).map(([n]) => `<strong>${escapeHtml(n)}</strong>`).join(', ')} next. Together they take you to about ${lakhRange(salaryRange(target, city, fitAfter))}.</p>` : ''}
+          <p>${verdict}</p>
+          <p class="source">Trending for this role: ${target.trending.up[0]}. Sources: TalentMatch, CompIntel, RoleFit, SkillRadar</p>
         </div></div>
       </div>`
     }
@@ -872,8 +909,8 @@ function runInteractiveDemo() {
   const list = document.getElementById('demoSteps');
   list.innerHTML = steps.map((s, i) => `
     <li class="demo-step">
-      <span class="demo-num">0${i + 1}</span>
-      <div>
+      <span class="demo-num">${String(i + 1).padStart(2, '0')}</span>
+      <div class="demo-card">
         <h3><small>${s.layer}</small>${s.title}</h3>
         <div class="demo-detail">${s.detail}</div>
       </div>
@@ -884,7 +921,7 @@ function runInteractiveDemo() {
     items.forEach(el => el.classList.add('active'));
     return;
   }
-  items.forEach((el, i) => demoTimers.push(setTimeout(() => el.classList.add('active'), 150 + i * 650)));
+  items.forEach((el, i) => demoTimers.push(setTimeout(() => el.classList.add('active'), 150 + i * 600)));
 }
 
 // ── Walkthrough: follow a packet down the layers, then run the demo ──

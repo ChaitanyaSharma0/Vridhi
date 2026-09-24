@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkillForge — How it works</title>
-  <meta name="description" content="How SkillForge turns Indian job postings, salary records, resumes and university syllabi into answers about what to learn next and what it is worth.">
+  <meta name="description" content="How SkillForge turns Indian job postings, salary records and resumes into answers about what to learn next and what it is worth.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23b5441b'/><text x='16' y='23' font-family='Georgia,serif' font-size='20' fill='%23f4f0e8' text-anchor='middle'>S</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,16 +35,16 @@
       <p class="eyebrow">Career intelligence for the Indian workforce · Build for Bharat 2.0</p>
       <h1>What should I learn next, and <em>what will it be worth?</em></h1>
       <div class="hero-foot">
-        <p class="hero-lede">SkillForge answers that one question with a four-stage pipeline. Job postings, salary records, resumes and university syllabi go in at the top. Skill gaps, salary forecasts and curriculum reports come out at the bottom, for students, recruiters and universities.</p>
+        <p class="hero-lede">SkillForge answers that one question with a four-stage pipeline. Job postings, salary records and resumes go in at the top. Out of the bottom come your skill gaps, the salary you can expect, and the roles you already fit, for job seekers and the recruiters hiring them.</p>
         <dl class="stats">
           <div><dt>Architecture layers</dt><dd>4</dd></div>
           <div><dt>Intelligence modules</dt><dd>4</dd></div>
-          <div><dt>Problem areas covered</dt><dd>6<small>/8</small></dd></div>
-          <div><dt>Stakeholders served</dt><dd>3</dd></div>
+          <div><dt>Problem areas covered</dt><dd>4<small>/8</small></dd></div>
+          <div><dt>Stakeholders served</dt><dd>2</dd></div>
         </dl>
       </div>
       <ol class="pipeline">
-        <li><a href="#layer1"><span class="n">01</span><strong>Ingest</strong><span>Five sources into MongoDB</span></a></li>
+        <li><a href="#layer1"><span class="n">01</span><strong>Ingest</strong><span>Four sources into MongoDB</span></a></li>
         <li><a href="#layer2"><span class="n">02</span><strong>Extract</strong><span>Skills, ESCO, embeddings</span></a></li>
         <li><a href="#layer3"><span class="n">03</span><strong>Analyse</strong><span>Four intelligence modules</span></a></li>
         <li><a href="#layer4"><span class="n">04</span><strong>Deliver</strong><span>Counselor, dashboard, API</span></a></li>
@@ -60,14 +60,14 @@
             <span class="layer-num">01</span>
             <span class="layer-titles">
               <span class="layer-title">Data ingestion &amp; ETL</span>
-              <span class="layer-sub">Raw Indian workforce data from five public sources, stored as-is in MongoDB</span>
+              <span class="layer-sub">Raw Indian workforce data from four public sources, stored as-is in MongoDB</span>
             </span>
-            <span class="layer-meta">5 sources</span>
+            <span class="layer-meta">4 sources</span>
             <span class="chev" aria-hidden="true"></span>
           </button>
         </h2>
         <div class="layer-content" id="layer1-body"><div class="layer-inner"><div class="layer-body">
-          <p class="layer-lede">Collects job postings, salary benchmarks, government reports, university syllabi and resumes. Everything comes from public datasets and APIs, and lands in MongoDB untouched so the source of every record can be traced.</p>
+          <p class="layer-lede">Collects job postings, salary benchmarks, government reports and resumes. Everything comes from public datasets and APIs, and lands in MongoDB untouched so the source of every record can be traced.</p>
 
           <div class="modules">
             <article class="module" data-modal="naukri">
@@ -113,27 +113,6 @@
               </figure>
             </article>
 
-            <article class="module" data-modal="university">
-              <div class="module-text">
-                <p class="module-kicker">Curricula</p>
-                <h3><button type="button">University syllabi (IITs, NITs)</button></h3>
-                <p>Course topics, credits and outcomes from Indian engineering institutions. This is what CurriculumSync scores against the market.</p>
-                <span class="more">Details</span>
-              </div>
-              <figure class="code" data-kind="input">
-                <figcaption>Sample raw input</figcaption>
-<pre>{
-  <span class="k">"university"</span>: "IIT Delhi",
-  <span class="k">"course"</span>: "COL774 Machine Learning",
-  <span class="k">"topics"</span>: ["Linear Regression", "SVM",
-             "Neural Networks",
-             "Decision Trees", "PCA"],
-  <span class="k">"credits"</span>: 4,
-  <span class="k">"semester"</span>: 7
-}</pre>
-              </figure>
-            </article>
-
             <article class="module module--plain" data-modal="nsdc">
               <div class="module-text">
                 <p class="module-kicker">Government &amp; industry</p>
@@ -154,11 +133,10 @@
           </div>
 
           <figure class="code layer-output" data-kind="output">
-            <figcaption>Output · MongoDB, 5 raw collections</figcaption>
+            <figcaption>Output · MongoDB, 4 raw collections</figcaption>
 <pre><span class="a">raw_postings</span>   15,000+ job listings
 <span class="a">raw_salaries</span>   compensation records
 <span class="a">raw_resumes</span>    candidate profiles
-<span class="a">raw_syllabi</span>    university course data
 <span class="a">raw_reports</span>    NSDC / NASSCOM data
 
 <span class="c">// unstructured documents, source metadata kept on every record</span></pre>
@@ -168,7 +146,7 @@
 
       <div class="handoff" id="conn12">
         <span class="handoff-track"><i class="data-packet" id="packet12"></i></span>
-        <span class="handoff-label">5 raw collections → NLP engine</span>
+        <span class="handoff-label">4 raw collections → NLP engine</span>
       </div>
 
       <!-- ── Layer 2 ── -->
@@ -185,7 +163,7 @@
           </button>
         </h2>
         <div class="layer-content" id="layer2-body"><div class="layer-inner"><div class="layer-body">
-          <p class="layer-lede">The core of the system. One extraction function runs over job descriptions, resumes and syllabi alike and turns free text into a clean list of skills. Structured results go back to MongoDB; embeddings go to ChromaDB for semantic search.</p>
+          <p class="layer-lede">The core of the system. One extraction function runs over job descriptions and resumes alike and turns free text into a clean list of skills. Structured results go back to MongoDB; embeddings go to ChromaDB for semantic search.</p>
 
           <div class="modules">
             <article class="module" data-modal="skillner">
@@ -284,14 +262,14 @@ Python ↔ Cooking      0.05</pre>
             <span class="layer-num">03</span>
             <span class="layer-titles">
               <span class="layer-title">Intelligence &amp; ML</span>
-              <span class="layer-sub">SkillRadar, TalentMatch, CompIntel and CurriculumSync, plus the knowledge graph and MLflow</span>
+              <span class="layer-sub">SkillRadar, TalentMatch, CompIntel and RoleFit, plus the knowledge graph and MLflow</span>
             </span>
             <span class="layer-meta">4 modules</span>
             <span class="chev" aria-hidden="true"></span>
           </button>
         </h2>
         <div class="layer-content" id="layer3-body"><div class="layer-inner"><div class="layer-body">
-          <p class="layer-lede">Four modules read the processed data and each answers a different question: what is trending, how far am I from a role, what am I worth, and does this course teach what employers want. Each one is trained on Indian data.</p>
+          <p class="layer-lede">Four modules read the processed data and each answers a different question: what is trending, how far am I from the role I want, what can I earn, and which other roles do I already fit. Each one is trained on Indian data.</p>
 
           <div class="modules">
             <article class="module" data-modal="skillradar">
@@ -315,7 +293,7 @@ Python ↔ Cooking      0.05</pre>
               <div class="module-text">
                 <p class="module-kicker">How far am I?</p>
                 <h3><button type="button">TalentMatch · gap engine</button></h3>
-                <p>Compares a resume against the ideal skill vector for the target role, built from every matching posting. Missing skills are ranked by match gain and salary impact.</p>
+                <p>Compares a resume against the ideal skill vector for the target role, built from every matching posting. Missing skills are ranked by how many of those postings actually ask for them.</p>
                 <span class="more">Details</span>
               </div>
               <div class="module-samples">
@@ -326,11 +304,12 @@ Python ↔ Cooking      0.05</pre>
                 </figure>
                 <figure class="code" data-kind="output">
                   <figcaption>Output</figcaption>
-<pre><span class="k">match</span>   <span class="a">42%</span>
+<pre><span class="k">fit</span>   <span class="a">42%</span>  <span class="c">// 4 of 10 core skills, weighted by demand</span>
 
-1  Machine Learning   +18% match   +₹2.1L
-2  TensorFlow         +14% match   +₹1.8L
-3  Statistics         +12% match   +₹1.2L</pre>
+<span class="k">learn next           asked for in</span>
+Machine Learning     <span class="a">88%</span> of postings
+TensorFlow           <span class="a">72%</span> of postings
+Statistics           <span class="a">68%</span> of postings</pre>
                 </figure>
               </div>
             </article>
@@ -339,7 +318,7 @@ Python ↔ Cooking      0.05</pre>
               <div class="module-text">
                 <p class="module-kicker">What am I worth?</p>
                 <h3><button type="button">CompIntel · salary predictor</button></h3>
-                <p>An ensemble of Random Forest, XGBoost and gradient boosting predicts salary from skills, experience and city. A what-if simulator and SHAP values show what moves the number.</p>
+                <p>An ensemble of Random Forest, XGBoost and gradient boosting predicts the salary range for your whole profile: skills, experience and city together. SHAP values show which parts of the profile move it.</p>
                 <span class="more">Details</span>
               </div>
               <div class="module-samples">
@@ -351,30 +330,30 @@ Python ↔ Cooking      0.05</pre>
                 </figure>
                 <figure class="code" data-kind="output">
                   <figcaption>Output</figcaption>
-<pre><span class="k">predicted</span>   <span class="a">₹22.4 LPA</span>
-<span class="c">// 85% interval ₹19.8L – ₹25.1L</span>
-
-<span class="k">what if</span>     + Kubernetes → ₹25.1 LPA (+₹2.7L)</pre>
+<pre><span class="k">today</span>           <span class="a">₹19.8 – 25.1 LPA</span>
+<span class="k">gaps closed</span>     ₹23.6 – 28.9 LPA
+<span class="c">// ranges for a whole profile, never a price per skill</span></pre>
                 </figure>
               </div>
             </article>
 
-            <article class="module" data-modal="curriculumsync">
+            <article class="module" data-modal="rolefit">
               <div class="module-text">
-                <p class="module-kicker">Does this course keep up?</p>
-                <h3><button type="button">CurriculumSync · alignment scorer</button></h3>
-                <p>Scores each university course by its overlap with market demand and writes a PDF gap report a dean can act on.</p>
+                <p class="module-kicker">What else do I fit?</p>
+                <h3><button type="button">RoleFit · opportunity finder</button></h3>
+                <p>Scores your skills against every role in the market, not only the one you picked. If you are over-qualified for your target, or a closer fit somewhere that pays more, it says so, with live posting counts and the range you could expect there.</p>
                 <span class="more">Details</span>
               </div>
               <figure class="code" data-kind="output">
-                <figcaption>Sample output · IIT Delhi CS</figcaption>
-<pre>COL106  Data Structures        <span class="a">91%</span>
-COL774  Machine Learning       <span class="a">82%</span>
-COL672  NLP                    <span class="a">75%</span>
-COL331  Operating Systems      45%
-COL216  Computer Architecture  28%
+                <figcaption>Sample output · Python, SQL, pandas, ML, Statistics · Bangalore</figcaption>
+<pre><span class="k">role              fit   open    your range</span>
+Data Scientist    <span class="a">68%</span>   2,400   ₹20.8 – 25.4L
+Data Analyst      <span class="a">71%</span>   2,800   ₹11.2 – 13.7L
+ML Engineer       34%   1,650   ₹20.1 – 24.6L
+Data Engineer     38%   1,900   ₹16.4 – 20.0L
 
-<span class="c">// PDF report generated with fpdf2</span></pre>
+<span class="a">→</span> You already clear most Data Analyst postings.
+  Data Scientist pays ~₹9L more at a similar fit.</pre>
               </figure>
             </article>
           </div>
@@ -410,7 +389,7 @@ COL216  Computer Architecture  28%
             </figure>
 
             <figure class="chart">
-              <p class="chart-title">CompIntel · SHAP contribution to predicted salary</p>
+              <p class="chart-title">CompIntel · what shapes one sample profile's prediction (SHAP)</p>
               <div class="shap">
                 <div class="shap-row pos"><span>Experience</span><span class="shap-track"><span class="shap-bar" style="--w:35%"></span></span><span class="bar-value">+₹4.8L</span></div>
                 <div class="shap-row pos"><span>Machine Learning</span><span class="shap-track"><span class="shap-bar" style="--w:25%"></span></span><span class="bar-value">+₹3.2L</span></div>
@@ -452,15 +431,15 @@ COL216  Computer Architecture  28%
               <div class="module-text">
                 <p class="module-kicker">Talk to it</p>
                 <h3><button type="button">Agentic RAG career counselor</button></h3>
-                <p>Groq reads the question, calls TalentMatch, CompIntel or SkillRadar as needed, pulls supporting context from ChromaDB, and answers only from what came back.</p>
+                <p>Groq reads the question, calls TalentMatch, CompIntel, RoleFit or SkillRadar as needed, pulls supporting context from ChromaDB, and answers only from what came back.</p>
                 <span class="more">Details</span>
               </div>
               <div class="module-samples">
                 <ol class="agent-steps">
                   <li><span>query</span>"I know Python and SQL. How well do I match Data Scientist?"</li>
                   <li><span>intent</span>Groq decides to call TalentMatch and CompIntel</li>
-                  <li><span>tools</span>TalentMatch → 42%, gaps ML, TensorFlow, Stats. CompIntel → +₹4.5L</li>
-                  <li><span>retrieve</span>ChromaDB → "ML demand grew 23% in India…"</li>
+                  <li><span>tools</span>TalentMatch → 42% fit, gaps ML, TensorFlow, Stats. CompIntel → ₹14–17L today. RoleFit → Data Analyst 74%</li>
+                  <li><span>retrieve</span>ChromaDB → "ML appears in 88% of DS postings in India…"</li>
                   <li><span>answer</span>Response built only from those numbers</li>
                 </ol>
                 <div class="chat">
@@ -468,13 +447,15 @@ COL216  Computer Architecture  28%
                   <div class="msg user"><span class="who">You</span><p>I know Python and SQL. How well do I match a Data Scientist role, and what should I learn next?</p></div>
                   <div class="msg bot"><span class="who">SkillForge</span>
                     <div>
-                      <p>You match <strong>42%</strong> of what Data Scientist postings ask for. Closing the top three gaps is worth about <strong>+₹4.5L</strong>.</p>
+                      <p>You cover <strong>42%</strong> of what Data Scientist postings ask for. At that level, expect around <strong>₹14–17L</strong> in Bangalore.</p>
+                      <p>Learn these next:</p>
                       <ol class="gap-list">
-                        <li><span class="skill-tag missing">Machine Learning</span> +18% match · +₹2.1L</li>
-                        <li><span class="skill-tag missing">Data visualisation</span> +14% match · +₹1.2L</li>
-                        <li><span class="skill-tag missing">Applied statistics</span> +12% match · +₹1.2L</li>
+                        <li><span class="skill-tag missing">Machine Learning</span> asked for in 88% of postings</li>
+                        <li><span class="skill-tag missing">TensorFlow</span> asked for in 72%</li>
+                        <li><span class="skill-tag missing">Statistics</span> asked for in 68%</li>
                       </ol>
-                      <p class="source">Sources: TalentMatch, CompIntel, ChromaDB</p>
+                      <p>Meanwhile, you already fit <strong>74%</strong> of Data Analyst postings, 2,800 open in Bangalore.</p>
+                      <p class="source">Sources: TalentMatch, CompIntel, RoleFit, ChromaDB</p>
                     </div>
                   </div>
                 </div>
@@ -494,7 +475,7 @@ COL216  Computer Architecture  28%
 <span class="k">GET </span> /api/v1/skills/forecast/{skill}
 <span class="a">POST</span> /api/v1/resume/analyze
 <span class="k">GET </span> /api/v1/salary/predict
-<span class="k">GET </span> /api/v1/curriculum/{university}
+<span class="k">GET </span> /api/v1/roles/fit
 <span class="k">GET </span> /api/v1/knowledge-graph
 <span class="a">POST</span> /api/v1/chat
 <span class="k">GET </span> /api/v1/reports/generate
@@ -506,7 +487,7 @@ COL216  Computer Architecture  28%
               <div class="module-text">
                 <p class="module-kicker">Explore it</p>
                 <h3><button type="button">Streamlit dashboard</button></h3>
-                <p>A multi-page app covering SkillRadar trends, TalentMatch gap analysis, the CompIntel what-if simulator, CurriculumSync reports and the counselor chat.</p>
+                <p>A multi-page app covering SkillRadar trends, TalentMatch gap analysis, CompIntel salary ranges, RoleFit role suggestions and the counselor chat.</p>
                 <span class="more">Details</span>
               </div>
             </article>
@@ -534,8 +515,11 @@ COL216  Computer Architecture  28%
           <select id="demoRole">
             <option>Data Scientist</option>
             <option>ML Engineer</option>
-            <option>Backend Developer</option>
+            <option>Data Engineer</option>
             <option>Data Analyst</option>
+            <option>Backend Developer</option>
+            <option>Full Stack Developer</option>
+            <option>DevOps Engineer</option>
           </select>
         </label>
         <label><span>City</span>

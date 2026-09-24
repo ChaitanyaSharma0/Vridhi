@@ -678,6 +678,7 @@ function openModal(key) {
   document.getElementById('modalOverlay').classList.add('active');
   document.body.style.overflow = 'hidden';
   document.querySelector('.modal-close').focus();
+  if (lenis) lenis.stop();
 }
 
 function closeModal(event) {
@@ -689,6 +690,7 @@ function closeModalDirect() {
   if (!overlay.classList.contains('active')) return;
   overlay.classList.remove('active');
   document.body.style.overflow = '';
+  if (lenis) lenis.start();
   if (lastFocus) lastFocus.focus();
 }
 
@@ -937,7 +939,7 @@ function runFullDemo() {
     void p.offsetWidth;  // restart the animation
     p.classList.add('animate');
   };
-  const show = id => document.getElementById(id).scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  const show = id => scrollToEl(document.getElementById(id));
 
   at(300, () => show('layer1'));
   at(1600, () => { pulse('packet12'); show('layer2'); });
@@ -1025,3 +1027,25 @@ function renderKnowledgeGraph() {
     el.addEventListener('blur', () => focusNode(null));
   });
 }
+
+// ── Smooth scrolling (Lenis). Off for reduced-motion users; native scroll if the CDN fails. ──
+const lenis = !reduceMotion && window.Lenis ? new Lenis({ lerp: 0.09, wheelMultiplier: 0.9 }) : null;
+if (lenis) {
+  const raf = t => { lenis.raf(t); requestAnimationFrame(raf); };
+  requestAnimationFrame(raf);
+}
+
+function scrollToEl(el) {
+  if (lenis) lenis.scrollTo(el, { offset: -80 });
+  else el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+}
+
+// In-page links glide instead of jumping
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  const target = a && document.querySelector(a.getAttribute('href'));
+  if (!target) return;
+  e.preventDefault();
+  scrollToEl(target);
+  if (a.classList.contains('skip')) target.focus?.();
+});

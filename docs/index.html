@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkillForge — How it works</title>
+  <title>SkillForge â€” How it works</title>
   <meta name="description" content="How SkillForge turns Indian job postings, salary records and resumes into answers about what to learn next and what it is worth.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23b5441b'/><text x='16' y='23' font-family='Georgia,serif' font-size='20' fill='%23f4f0e8' text-anchor='middle'>S</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,11 +28,11 @@
     </div>
   </header>
 
-  <main id="main">
+  <main id="main" tabindex="-1">
 
-    <!-- ── Hero ── -->
+    <!-- â”€â”€ Hero â”€â”€ -->
     <section class="hero" id="top">
-      <p class="eyebrow">Career intelligence for the Indian workforce · Build for Bharat 2.0</p>
+      <p class="eyebrow">Career intelligence for the Indian workforce Â· Build for Bharat 2.0</p>
       <h1>What should I learn next, and <em>what will it be worth?</em></h1>
       <div class="hero-foot">
         <p class="hero-lede">SkillForge answers that one question with a four-stage pipeline. Job postings, salary records and resumes go in at the top. Out of the bottom come your skill gaps, the salary you can expect, and the roles you already fit, for job seekers and the recruiters hiring them.</p>
@@ -53,7 +53,7 @@
 
     <div class="architecture" id="architecture">
 
-      <!-- ── Layer 1 ── -->
+      <!-- â”€â”€ Layer 1 â”€â”€ -->
       <section class="layer" id="layer1" data-layer="1">
         <h2 class="layer-head">
           <button class="layer-toggle" type="button" aria-expanded="true" aria-controls="layer1-body" onclick="toggleLayer('layer1')">
@@ -87,7 +87,7 @@
   <span class="k">"description"</span>: "Looking for exp in Python,
     TensorFlow, ML pipelines, A/B testing,
     SQL, Spark...",
-  <span class="k">"salary"</span>: "₹18-28 LPA"
+  <span class="k">"salary"</span>: "â‚¹18-28 LPA"
 }</pre>
               </figure>
             </article>
@@ -133,7 +133,7 @@
           </div>
 
           <figure class="code layer-output" data-kind="output">
-            <figcaption>Output · MongoDB, 4 raw collections</figcaption>
+            <figcaption>Output Â· MongoDB, 4 raw collections</figcaption>
 <pre><span class="a">raw_postings</span>   15,000+ job listings
 <span class="a">raw_salaries</span>   compensation records
 <span class="a">raw_resumes</span>    candidate profiles
@@ -146,17 +146,17 @@
 
       <div class="handoff" id="conn12">
         <span class="handoff-track"><i class="data-packet" id="packet12"></i></span>
-        <span class="handoff-label">4 raw collections → NLP engine</span>
+        <span class="handoff-label">4 raw collections â†’ NLP engine</span>
       </div>
 
-      <!-- ── Layer 2 ── -->
+      <!-- â”€â”€ Layer 2 â”€â”€ -->
       <section class="layer" id="layer2" data-layer="2">
         <h2 class="layer-head">
           <button class="layer-toggle" type="button" aria-expanded="true" aria-controls="layer2-body" onclick="toggleLayer('layer2')">
             <span class="layer-num">02</span>
             <span class="layer-titles">
               <span class="layer-title">NLP engine &amp; skill ontology</span>
-              <span class="layer-sub">Raw text → extracted skills → ESCO mapping → embeddings → ChromaDB</span>
+              <span class="layer-sub">Raw text â†’ extracted skills â†’ ESCO mapping â†’ embeddings â†’ ChromaDB</span>
             </span>
             <span class="layer-meta">3 stages</span>
             <span class="chev" aria-hidden="true"></span>
@@ -168,14 +168,14 @@
           <div class="modules">
             <article class="module" data-modal="skillner">
               <div class="module-text">
-                <p class="module-kicker">Stage 1 · Extraction</p>
+                <p class="module-kicker">Stage 1 Â· Extraction</p>
                 <h3><button type="button">Hybrid skill NER</button></h3>
                 <p>Two passes. A dictionary match against ESCO catches the common skills fast. A Groq LLM pass picks up the emerging and niche ones the dictionary misses.</p>
                 <span class="more">Details</span>
               </div>
               <div class="module-samples">
                 <figure class="code" data-kind="input">
-                  <figcaption>Input · raw job description</figcaption>
+                  <figcaption>Input Â· raw job description</figcaption>
 <pre>"Looking for a senior engineer with
  experience in <span class="a">Python</span>, <span class="a">TensorFlow</span>,
  <span class="a">ML pipelines</span>, <span class="a">A/B testing</span>, <span class="a">SQL</span>
@@ -184,7 +184,7 @@
                 </figure>
                 <p class="flow">extract, then normalise</p>
                 <figure class="code" data-kind="output">
-                  <figcaption>Output · skills array</figcaption>
+                  <figcaption>Output Â· skills array</figcaption>
 <pre><span class="c">// pass 1, dictionary</span>
 ["Python", "TensorFlow", "SQL", "Apache Spark"]
 <span class="c">// pass 2, LLM</span>
@@ -197,7 +197,7 @@
 
             <article class="module" data-modal="esco">
               <div class="module-text">
-                <p class="module-kicker">Stage 2 · Normalisation</p>
+                <p class="module-kicker">Stage 2 Â· Normalisation</p>
                 <h3><button type="button">ESCO skill taxonomy</button></h3>
                 <p>A curated set of 500+ skills from the EU's ESCO framework. Every spelling of a skill resolves to one canonical name, so "ML" and "machine learning" are counted together.</p>
                 <span class="more">Details</span>
@@ -212,7 +212,7 @@
 
             <article class="module" data-modal="embeddings">
               <div class="module-text">
-                <p class="module-kicker">Stage 3 · Vectors</p>
+                <p class="module-kicker">Stage 3 Â· Vectors</p>
                 <h3><button type="button">Semantic embeddings</button></h3>
                 <p>MiniLM-L6-v2 turns skills and text chunks into 384-dimension vectors. Related skills land close together, which powers matching and RAG retrieval.</p>
                 <span class="more">Details</span>
@@ -220,18 +220,18 @@
               <figure class="code" data-kind="process">
                 <figcaption>Embedding</figcaption>
 <pre><span class="k">in</span>   "Python programming language"
-<span class="k">out</span>  [0.0234, -0.1892, 0.4521, …, 0.0423]
+<span class="k">out</span>  [0.0234, -0.1892, 0.4521, â€¦, 0.0423]
 
 <span class="c">// cosine similarity</span>
-Python ↔ pandas       <span class="a">0.82</span>
-Python ↔ Kubernetes   0.31
-Python ↔ Cooking      0.05</pre>
+Python â†” pandas       <span class="a">0.82</span>
+Python â†” Kubernetes   0.31
+Python â†” Cooking      0.05</pre>
               </figure>
             </article>
           </div>
 
           <figure class="code layer-output" data-kind="output">
-            <figcaption>Output · MongoDB processed_postings + ChromaDB vectors</figcaption>
+            <figcaption>Output Â· MongoDB processed_postings + ChromaDB vectors</figcaption>
 <pre>{
   <span class="k">"posting_id"</span>: "NK_28491",
   <span class="k">"role"</span>: "Data Scientist",
@@ -245,17 +245,17 @@ Python ↔ Cooking      0.05</pre>
 
 <span class="a">skillforge_knowledge</span>  1,200+ embedded chunks for retrieval
 <span class="c">// "Python demand grew 23% in the Indian job market..."</span>
-<span class="c">// "Average ML Engineer salary in Bangalore: ₹18.5L..."</span></pre>
+<span class="c">// "Average ML Engineer salary in Bangalore: â‚¹18.5L..."</span></pre>
           </figure>
         </div></div></div>
       </section>
 
       <div class="handoff" id="conn23">
         <span class="handoff-track"><i class="data-packet" id="packet23"></i></span>
-        <span class="handoff-label">processed records + vectors → intelligence modules</span>
+        <span class="handoff-label">processed records + vectors â†’ intelligence modules</span>
       </div>
 
-      <!-- ── Layer 3 ── -->
+      <!-- â”€â”€ Layer 3 â”€â”€ -->
       <section class="layer" id="layer3" data-layer="3">
         <h2 class="layer-head">
           <button class="layer-toggle" type="button" aria-expanded="true" aria-controls="layer3-body" onclick="toggleLayer('layer3')">
@@ -275,24 +275,24 @@ Python ↔ Cooking      0.05</pre>
             <article class="module" data-modal="skillradar">
               <div class="module-text">
                 <p class="module-kicker">What's trending?</p>
-                <h3><button type="button">SkillRadar · trend forecaster</button></h3>
-                <p>Counts skill mentions per month by role and city, flags skills as rising or declining past ±15%, and forecasts six months ahead with ARIMA and linear regression.</p>
+                <h3><button type="button">SkillRadar Â· trend forecaster</button></h3>
+                <p>Counts skill mentions per month by role and city, flags skills as rising or declining past Â±15%, and forecasts six months ahead with ARIMA and linear regression.</p>
                 <span class="more">Details</span>
               </div>
               <figure class="code" data-kind="output">
-                <figcaption>Sample output · Data Scientist, Bangalore</figcaption>
+                <figcaption>Sample output Â· Data Scientist, Bangalore</figcaption>
 <pre><span class="k">rising</span>     LangChain    <span class="a">+340%</span>
            MLOps         <span class="a">+89%</span>
            Kubernetes    <span class="a">+45%</span>
-<span class="k">declining</span>  Hadoop        −52%
-           jQuery        −67%</pre>
+<span class="k">declining</span>  Hadoop        âˆ’52%
+           jQuery        âˆ’67%</pre>
               </figure>
             </article>
 
             <article class="module" data-modal="talentmatch">
               <div class="module-text">
                 <p class="module-kicker">How far am I?</p>
-                <h3><button type="button">TalentMatch · gap engine</button></h3>
+                <h3><button type="button">TalentMatch Â· gap engine</button></h3>
                 <p>Compares a resume against the ideal skill vector for the target role, built from every matching posting. Missing skills are ranked by how many of those postings actually ask for them.</p>
                 <span class="more">Details</span>
               </div>
@@ -317,7 +317,7 @@ Statistics           <span class="a">68%</span> of postings</pre>
             <article class="module" data-modal="compintel">
               <div class="module-text">
                 <p class="module-kicker">What am I worth?</p>
-                <h3><button type="button">CompIntel · salary predictor</button></h3>
+                <h3><button type="button">CompIntel Â· salary predictor</button></h3>
                 <p>An ensemble of Random Forest, XGBoost and gradient boosting predicts the salary range for your whole profile: skills, experience and city together. SHAP values show which parts of the profile move it.</p>
                 <span class="more">Details</span>
               </div>
@@ -330,8 +330,8 @@ Statistics           <span class="a">68%</span> of postings</pre>
                 </figure>
                 <figure class="code" data-kind="output">
                   <figcaption>Output</figcaption>
-<pre><span class="k">today</span>           <span class="a">₹19.8 – 25.1 LPA</span>
-<span class="k">gaps closed</span>     ₹23.6 – 28.9 LPA
+<pre><span class="k">today</span>           <span class="a">â‚¹19.8 â€“ 25.1 LPA</span>
+<span class="k">gaps closed</span>     â‚¹23.6 â€“ 28.9 LPA
 <span class="c">// ranges for a whole profile, never a price per skill</span></pre>
                 </figure>
               </div>
@@ -340,20 +340,20 @@ Statistics           <span class="a">68%</span> of postings</pre>
             <article class="module" data-modal="rolefit">
               <div class="module-text">
                 <p class="module-kicker">What else do I fit?</p>
-                <h3><button type="button">RoleFit · opportunity finder</button></h3>
+                <h3><button type="button">RoleFit Â· opportunity finder</button></h3>
                 <p>Scores your skills against every role in the market, not only the one you picked. If you are over-qualified for your target, or a closer fit somewhere that pays more, it says so, with live posting counts and the range you could expect there.</p>
                 <span class="more">Details</span>
               </div>
               <figure class="code" data-kind="output">
-                <figcaption>Sample output · Python, SQL, pandas, ML, Statistics · Bangalore</figcaption>
+                <figcaption>Sample output Â· Python, SQL, pandas, ML, Statistics Â· Bangalore</figcaption>
 <pre><span class="k">role              fit   open    your range</span>
-Data Scientist    <span class="a">68%</span>   2,400   ₹20.8 – 25.4L
-Data Analyst      <span class="a">71%</span>   2,800   ₹11.2 – 13.7L
-ML Engineer       34%   1,650   ₹20.1 – 24.6L
-Data Engineer     38%   1,900   ₹16.4 – 20.0L
+Data Scientist    <span class="a">68%</span>   2,400   â‚¹20.8 â€“ 25.4L
+Data Analyst      <span class="a">71%</span>   2,800   â‚¹11.2 â€“ 13.7L
+ML Engineer       34%   1,650   â‚¹20.1 â€“ 24.6L
+Data Engineer     38%   1,900   â‚¹16.4 â€“ 20.0L
 
-<span class="a">→</span> You already clear most Data Analyst postings.
-  Data Scientist pays ~₹9L more at a similar fit.</pre>
+<span class="a">â†’</span> You already clear most Data Analyst postings.
+  Data Scientist pays ~â‚¹9L more at a similar fit.</pre>
               </figure>
             </article>
           </div>
@@ -370,36 +370,36 @@ Data Engineer     38%   1,900   ₹16.4 – 20.0L
             </article>
             <article class="support-item" data-modal="mlflow">
               <h3><button type="button">MLflow tracking</button></h3>
-              <p>Every training run logged with hyperparameters, RMSE, R² and MAE. Versioned and reproducible.</p>
+              <p>Every training run logged with hyperparameters, RMSE, RÂ² and MAE. Versioned and reproducible.</p>
             </article>
           </div>
 
           <p class="subhead">Sample outputs</p>
           <div class="charts">
             <figure class="chart">
-              <p class="chart-title">SkillRadar · demand trend, Data Scientist, India</p>
+              <p class="chart-title">SkillRadar Â· demand trend, Data Scientist, India</p>
               <div class="bars">
                 <div class="bar-row" data-trend="up"><span>LangChain</span><span class="bar-track"><span class="bar-fill" style="--w:92%"></span></span><span class="bar-value">+340%</span></div>
                 <div class="bar-row" data-trend="up"><span>TensorFlow</span><span class="bar-track"><span class="bar-fill" style="--w:78%"></span></span><span class="bar-value">+78%</span></div>
                 <div class="bar-row"><span>Python</span><span class="bar-track"><span class="bar-fill" style="--w:95%"></span></span><span class="bar-value">95%</span></div>
                 <div class="bar-row"><span>SQL</span><span class="bar-track"><span class="bar-fill" style="--w:82%"></span></span><span class="bar-value">82%</span></div>
-                <div class="bar-row" data-trend="down"><span>Hadoop</span><span class="bar-track"><span class="bar-fill" style="--w:25%"></span></span><span class="bar-value">−52%</span></div>
+                <div class="bar-row" data-trend="down"><span>Hadoop</span><span class="bar-track"><span class="bar-fill" style="--w:25%"></span></span><span class="bar-value">âˆ’52%</span></div>
               </div>
               <ul class="legend"><li><i class="up"></i>Rising</li><li><i></i>Stable</li><li><i class="down"></i>Declining</li></ul>
             </figure>
 
             <figure class="chart">
-              <p class="chart-title">CompIntel · what shapes one sample profile's prediction (SHAP)</p>
+              <p class="chart-title">CompIntel Â· what shapes one sample profile's prediction (SHAP)</p>
               <div class="shap">
-                <div class="shap-row pos"><span>Experience</span><span class="shap-track"><span class="shap-bar" style="--w:35%"></span></span><span class="bar-value">+₹4.8L</span></div>
-                <div class="shap-row pos"><span>Machine Learning</span><span class="shap-track"><span class="shap-bar" style="--w:25%"></span></span><span class="bar-value">+₹3.2L</span></div>
-                <div class="shap-row pos"><span>Python</span><span class="shap-track"><span class="shap-bar" style="--w:18%"></span></span><span class="bar-value">+₹2.1L</span></div>
-                <div class="shap-row pos"><span>Bangalore</span><span class="shap-track"><span class="shap-bar" style="--w:12%"></span></span><span class="bar-value">+₹1.5L</span></div>
-                <div class="shap-row pos"><span>Cloud (AWS)</span><span class="shap-track"><span class="shap-bar" style="--w:10%"></span></span><span class="bar-value">+₹1.2L</span></div>
-                <div class="shap-row neg"><span>No degree</span><span class="shap-track"><span class="shap-bar" style="--w:15%"></span></span><span class="bar-value">−₹2.0L</span></div>
-                <div class="shap-row neg"><span>Tier-3 city</span><span class="shap-track"><span class="shap-bar" style="--w:20%"></span></span><span class="bar-value">−₹3.1L</span></div>
+                <div class="shap-row pos"><span>Experience</span><span class="shap-track"><span class="shap-bar" style="--w:35%"></span></span><span class="bar-value">+â‚¹4.8L</span></div>
+                <div class="shap-row pos"><span>Machine Learning</span><span class="shap-track"><span class="shap-bar" style="--w:25%"></span></span><span class="bar-value">+â‚¹3.2L</span></div>
+                <div class="shap-row pos"><span>Python</span><span class="shap-track"><span class="shap-bar" style="--w:18%"></span></span><span class="bar-value">+â‚¹2.1L</span></div>
+                <div class="shap-row pos"><span>Bangalore</span><span class="shap-track"><span class="shap-bar" style="--w:12%"></span></span><span class="bar-value">+â‚¹1.5L</span></div>
+                <div class="shap-row pos"><span>Cloud (AWS)</span><span class="shap-track"><span class="shap-bar" style="--w:10%"></span></span><span class="bar-value">+â‚¹1.2L</span></div>
+                <div class="shap-row neg"><span>No degree</span><span class="shap-track"><span class="shap-bar" style="--w:15%"></span></span><span class="bar-value">âˆ’â‚¹2.0L</span></div>
+                <div class="shap-row neg"><span>Tier-3 city</span><span class="shap-track"><span class="shap-bar" style="--w:20%"></span></span><span class="bar-value">âˆ’â‚¹3.1L</span></div>
               </div>
-              <p class="axis-note">← lowers salary · raises salary →</p>
+              <p class="axis-note">â† lowers salary Â· raises salary â†’</p>
             </figure>
           </div>
         </div></div></div>
@@ -407,10 +407,10 @@ Data Engineer     38%   1,900   ₹16.4 – 20.0L
 
       <div class="handoff" id="conn34">
         <span class="handoff-track"><i class="data-packet" id="packet34"></i></span>
-        <span class="handoff-label">module outputs → counselor, dashboard, API</span>
+        <span class="handoff-label">module outputs â†’ counselor, dashboard, API</span>
       </div>
 
-      <!-- ── Layer 4 ── -->
+      <!-- â”€â”€ Layer 4 â”€â”€ -->
       <section class="layer" id="layer4" data-layer="4">
         <h2 class="layer-head">
           <button class="layer-toggle" type="button" aria-expanded="true" aria-controls="layer4-body" onclick="toggleLayer('layer4')">
@@ -438,8 +438,8 @@ Data Engineer     38%   1,900   ₹16.4 – 20.0L
                 <ol class="agent-steps">
                   <li><span>query</span>"I know Python and SQL. How well do I match Data Scientist?"</li>
                   <li><span>intent</span>Groq decides to call TalentMatch and CompIntel</li>
-                  <li><span>tools</span>TalentMatch → 42% fit, gaps ML, TensorFlow, Stats. CompIntel → ₹14–17L today. RoleFit → Data Analyst 74%</li>
-                  <li><span>retrieve</span>ChromaDB → "ML appears in 88% of DS postings in India…"</li>
+                  <li><span>tools</span>TalentMatch â†’ 42% fit, gaps ML, TensorFlow, Stats. CompIntel â†’ â‚¹14â€“17L today. RoleFit â†’ Data Analyst 74%</li>
+                  <li><span>retrieve</span>ChromaDB â†’ "ML appears in 88% of DS postings in Indiaâ€¦"</li>
                   <li><span>answer</span>Response built only from those numbers</li>
                 </ol>
                 <div class="chat">
@@ -447,7 +447,7 @@ Data Engineer     38%   1,900   ₹16.4 – 20.0L
                   <div class="msg user"><span class="who">You</span><p>I know Python and SQL. How well do I match a Data Scientist role, and what should I learn next?</p></div>
                   <div class="msg bot"><span class="who">SkillForge</span>
                     <div>
-                      <p>You cover <strong>42%</strong> of what Data Scientist postings ask for. At that level, expect around <strong>₹14–17L</strong> in Bangalore.</p>
+                      <p>You cover <strong>42%</strong> of what Data Scientist postings ask for. At that level, expect around <strong>â‚¹14â€“17L</strong> in Bangalore.</p>
                       <p>Learn these next:</p>
                       <ol class="gap-list">
                         <li><span class="skill-tag missing">Machine Learning</span> asked for in 88% of postings</li>
@@ -497,7 +497,7 @@ Data Engineer     38%   1,900   ₹16.4 – 20.0L
 
     </div>
 
-    <!-- ── Demo ── -->
+    <!-- â”€â”€ Demo â”€â”€ -->
     <section class="demo" id="demo">
       <div class="section-head">
         <div>
@@ -539,7 +539,7 @@ Data Engineer     38%   1,900   ₹16.4 – 20.0L
       </ol>
     </section>
 
-    <!-- ── Knowledge graph ── -->
+    <!-- â”€â”€ Knowledge graph â”€â”€ -->
     <section class="graph" id="graph">
       <div class="section-head">
         <div>
@@ -563,13 +563,13 @@ Data Engineer     38%   1,900   ₹16.4 – 20.0L
   </main>
 
   <footer class="footer">
-    <span>SkillForge · architecture reference</span>
+    <span>SkillForge Â· architecture reference</span>
     <span>Build for Bharat 2.0</span>
   </footer>
 
-  <!-- ── Detail drawer ── -->
+  <!-- â”€â”€ Detail drawer â”€â”€ -->
   <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-    <aside class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <aside class="modal" data-lenis-prevent role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <header class="modal-header">
         <h2 class="modal-title" id="modalTitle">Details</h2>
         <button class="modal-close" type="button" onclick="closeModalDirect()">Close</button>
@@ -578,6 +578,7 @@ Data Engineer     38%   1,900   ₹16.4 – 20.0L
     </aside>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
